@@ -40,6 +40,11 @@
         <artifactId>commons-logging</artifactId>
         <version>1.2</version> <!-- Replace with the version you need -->
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>      
+    </dependency>
   </dependencies>
 
   <build>

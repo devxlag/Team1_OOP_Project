@@ -17,10 +17,12 @@ public class SubmissionProcessorClient {
                 System.err.println("The zip file does not exist.");
                 return;
             }
-
-            SubmissionProcessor processor = new ZipSubmissionProcessor();
             
-                processor.processSubmission(zipFile);
+            
+            SubmissionProcessor processor = new ZipSubmissionProcessor();
+            processor.registerObserver(new Evaluator());
+                        
+            processor.processSubmission(zipFile);
            
         } catch (Exception e) {
             e.printStackTrace();
