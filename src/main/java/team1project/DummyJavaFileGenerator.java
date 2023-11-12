@@ -8,14 +8,14 @@ import java.io.IOException;
 
 public class DummyJavaFileGenerator {
 
-  public static void main(String[] args) throws Exception {
+//   public static void main(String[] args) throws Exception {
 
 
-    generateFiles("src/main/java/team1project/dummyClasses.txt", "src/test/java/team1project");
+//     generateFiles("src/main/java/team1project/dummyClasses.txt", "src/test/java/team1project");
     
 
-  }
-    public static void generateFiles(String inputFile, String outputDir) throws IOException {
+//   }
+    public void generateFiles(String inputFile, String outputDir) throws IOException {
 
     BufferedReader reader = new BufferedReader(new FileReader(inputFile));
     

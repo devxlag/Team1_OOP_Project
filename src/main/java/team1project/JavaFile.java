@@ -17,4 +17,12 @@ class JavaFile implements AbstractFile {
     public void display() {
         System.out.println("Java File: " + fileName + "\nContents:\n" + contents.toString());
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getContents() {
+        return contents.toString();
+    }
 }

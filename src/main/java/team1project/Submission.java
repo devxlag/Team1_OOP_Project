@@ -9,10 +9,14 @@ public class Submission {
     private int score;
     private String feedback;
     private ArrayList<String> filesSubmitted;
+    private ArrayList<String> missingFiles;
+    private ArrayList<String> results;
     
 
     public Submission() {
-       new ArrayList<>();
+        filesSubmitted = new ArrayList<>();
+        missingFiles = new ArrayList<>();
+        results = new ArrayList<>();
     }
 
     public String getStudentName() {
