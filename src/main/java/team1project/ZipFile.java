@@ -28,6 +28,10 @@ class ZipFile implements AbstractFile{
     public String getFileName() {
         return fileName;
     }
+
+    public List<AbstractFile> getChildren() {
+        return contents;
+    }
 }
 
 
