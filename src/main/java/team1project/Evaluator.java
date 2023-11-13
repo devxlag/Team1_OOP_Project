@@ -52,13 +52,13 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
           for(AbstractFile child : zipFile.getChildren()) {
             traverseAndWriteFiles(child, directory); 
           }
-          setSubmission();
-          try {
-            runTest();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        //   setSubmission();
+        //   try {
+        //     runTest();
+        // } catch (Exception e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
       
         } else if(node instanceof JavaFile) {
           
@@ -83,7 +83,7 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
         
         submission.setResults(results);               
         notifyObservers(observer1);
-        
+
       }
 
       public void reset(){
