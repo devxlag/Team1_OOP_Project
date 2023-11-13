@@ -8,13 +8,6 @@ import java.io.IOException;
 
 public class DummyJavaFileGenerator {
 
-//   public static void main(String[] args) throws Exception {
-
-
-//     generateFiles("src/main/java/team1project/dummyClasses.txt", "src/test/java/team1project");
-    
-
-//   }
     public void generateFiles(String inputFile, String outputDir) throws IOException {
 
     BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -51,7 +44,7 @@ public class DummyJavaFileGenerator {
 
     }
 
-    public static void writeClassFile(String className, String content, String outputDir) throws IOException {
+    private static void writeClassFile(String className, String content, String outputDir) throws IOException {
         File file = new File(outputDir + "/" + className + ".java");
         FileWriter writer = new FileWriter(file); 
         writer.write(content);
