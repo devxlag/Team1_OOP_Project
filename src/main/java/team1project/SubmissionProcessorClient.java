@@ -6,7 +6,7 @@ import java.io.File;
 public class SubmissionProcessorClient {
     public static void main(String[] args) {
         // Replace with the path to the zip file containing student submissions
-        String zipFilePath = "C:\\Users\\Devon Murray\\OneDrive - The University of the West Indies, St. Augustine\\UWI Courses\\Year 3 Semester 1\\COMP 3607\\Assignments\\Project\\submissions.zip";
+        String zipFilePath ="C:\\Users\\Devon Murray\\OneDrive - The University of the West Indies, St. Augustine\\UWI Courses\\Year 3 Semester 1\\COMP 3607\\Assignments\\Project\\submissions.zip";
 
         //SubmissionProcessorFactory processorFactory = new SubmissionProcessorFactory();
 
