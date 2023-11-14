@@ -3,8 +3,11 @@ package team1project;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
 
@@ -17,7 +20,10 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
 
     public Evaluator() {       
         this.dummyJavaFileGenerator = new DummyJavaFileGenerator(); 
-        registerObserver(new ScoreCalculator());       
+        registerObserver(new ScoreCalculator()); 
+        registerObserver(new Feedback()); 
+        PDFManager pdfManager = new PDFManager();
+        registerObserver(new FeedbackFormatDecorator(pdfManager));    
     }
 
     public void update(ZipFile zipFile) {
@@ -26,8 +32,8 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
         try {
             createTempJavaFiles();
             System.out.println("Temp Java files created.");
-            reset();
-            System.out.println("Temp Java files reset.");
+            //reset();
+           
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,65 +41,130 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
 
     public void createTempJavaFiles() throws IOException {
 
-        File tempDir = new File("src/test/java/team1project");
+        File tempDir = new File("src/main/java/team1project");
         if(!tempDir.exists()) {
             tempDir.mkdirs(); 
         }
 
-        traverseAndWriteFiles(compositeTreeRoot, tempDir);
+        if(compositeTreeRoot !=null){
+            traverseFiles(compositeTreeRoot.getChildren(), tempDir);
+        }
+
+       // traverseAndWriteFiles(compositeTreeRoot, tempDir);
 
     }
 
-    private void traverseAndWriteFiles(AbstractFile node, File directory) throws IOException {
+    private void traverseFiles(List<AbstractFile> children, File directory) throws IOException {
 
-        if(node instanceof ZipFile) {
-          ZipFile zipFile = (ZipFile) node;
-          
-          for(AbstractFile child : zipFile.getChildren()) {
-            traverseAndWriteFiles(child, directory); 
-          }
-        //   setSubmission();
-        //   try {
-        //     runTest();
-        // } catch (Exception e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
-      
-        } else if(node instanceof JavaFile) {
-          
-          JavaFile file = (JavaFile) node;
-          
-          // write file contents to temp file
-          File tempFile = new File(directory, file.getFileName());
+        String studentID = "";
+        for(AbstractFile node : children) {
+            if(node instanceof ZipFile) {
+                ZipFile zipFile = (ZipFile) node;
+                setSubmission();
+                studentID = extractIdFromFileName(zipFile.getFileName());
+                boolean written = false;
+                
+                for(AbstractFile child : zipFile.getChildren()) {
+                    written = writeJavaFile(child, directory); 
+                }
+                if(written){
+                    System.out.println("\nJava files written to temp directory.");
+                    
+                    submission.setStudentID(studentID);
+                    System.out.println("Running Test for: " + submission.getStudentID());
+                    try {
+                        runTest(submission);
+                        //reset();
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    
+                     System.out.println("Temp Java files reset.");
+                }
+            } 
+        }
+            
+    }
+
+
+    // private String checkFileName(AbstractFile node) {
+    //     String[] filenames = "Flight.java, Passenger.java, TestFlight.java, TestPassenger.java".split(", ");
+        
+       
+
+    //     if (node instanceof JavaFile) {
+    //         JavaFile file = (JavaFile) node;
+    //         if( file.getFileName() )
+
+
+    //         return file.getFileName();
+    //     }
+    //     return "";
+    // }
+
+    private static String extractIdFromFileName(String fileName) {
+        // Define the pattern for extracting the ID
+        Pattern pattern = Pattern.compile("(\\d+)_.*");
+
+        // Create a matcher with the input file name
+        Matcher matcher = pattern.matcher(fileName);
+
+        // Check if the pattern matches
+        if (matcher.matches()) {
+            // Group 1 contains the extracted ID
+            return matcher.group(1);
+        } else {
+            // Return an empty string or handle the case where no match is found
+            return "";
+        }
+    }
+
+    public boolean writeJavaFile(AbstractFile node, File directory) throws IOException{
+        if(node instanceof JavaFile) {
+            
+        JavaFile file = (JavaFile) node;
+        
+        // write file contents to temp file
+        File tempFile = new File(directory, file.getFileName());
             try (FileWriter writer = new FileWriter(tempFile)) {
             writer.write(file.getContents());
             }
-          
-        }      
-      }
-
-      private void setSubmission(){
-        this.submission = new Submission();
-      }
-
-      public void runTest() throws Exception {
-
-        ArrayList<TestResult> results = JavaFileCompiler.compileAndRunTests();
         
-        submission.setResults(results);               
-        notifyObservers(observer1);
+        }
+            return true; 
+    }
 
-      }
+    private void setSubmission(){
+        this.submission = null;
+        this.submission = new Submission();
+    }
 
-      public void reset(){
+    public void runTest(Submission submission) throws Exception {
+
+        ArrayList<TestResult> results = new ArrayList<>();
+        if (JavaFileCompiler.compileJavaFiles()){
+            
+            results = TestRunner.runTests(submission);
+                     
+            submission.setResults(results); 
+            System.out.println("Test Results: " + submission.getResults());                
+            notifyObservers(observer1);
+
+        }        
+    }
+    public String getTempDirectoryPath() {
+        return "src/main/java/team1project"; // Adjust this path accordingly
+    }
+
+    public void reset(){
         try {
-            dummyJavaFileGenerator.generateFiles("src/main/java/team1project/dummyClasses.txt", "src/test/java/team1project");
+            dummyJavaFileGenerator.generateFiles("src/main/java/team1project/dummyClasses.txt", "src/main/java/team1project");
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
         };
-      }
+    }
 
     @Override
     public void registerObserver(EvaluatorObserver observer) {
@@ -101,38 +172,41 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
         if (observer instanceof ScoreCalculator){
             observer1 = observer;
         }
-        // else if (observer instance of Feedback){
-        //     observer2 = observer;
-        // }
-        // else if (observer instance of PDFDecorator){
-        //     observer3 = observer;
-        // }
+        else if (observer instanceof Feedback){
+            observer2 = observer;
+        }
+       else if (observer instanceof PDFBaseDecorator){
+            observer3 = observer;
+        }
     }
 
     @Override
     public void removeObserver(EvaluatorObserver observer) {
-        // if (observer instance of ScoreCalcualtor){
-        //     observer1 = null;
-        // }
-        // else if (observer instance of Feedback){
-        //     observer2 = null;
-        // }
-        // else if (observer instance of PDFDecorator){
-        //     observer3 = null;
-        // }
+        if (observer instanceof ScoreCalculator){
+            observer1 = null;
+        }
+        else if (observer instanceof Feedback){
+            observer2 = null;
+        }
+        else if (observer instanceof PDFBaseDecorator){
+            observer3 = null;
+        }
     }
 
     @Override
     public void notifyObservers(EvaluatorObserver observer) {
         if (observer instanceof ScoreCalculator){
-            observer1.update(submission);
-        }
-        // else if (observer instance of Feedback){
-        //     observer2.update(submission);
-        // }
-        // else if (observer instance of PDFDecorator){
-        //     observer3.update(submission);
-        // }
+            if(observer1.update(submission)){
+                System.out.println("ScoreCalculator updated Submission: Scores Appended" );
+            
+                if(observer2.update(submission)){
+                    System.out.println("FeedBack updated Submission: Feedback Appended");
+                    if(observer3.update(submission)){
+                        System.out.println("PDFDecorator updated Submission: PDF Created");
+                    }
+                 }
+            }
+        }       
     }
     
 }

@@ -2,6 +2,6 @@ package team1project;
 
 public interface EvaluatorObserver {
     
-        public void update(Submission submission);
+        public boolean update(Submission submission);
     
 }

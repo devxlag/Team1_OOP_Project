@@ -10,7 +10,7 @@ public class PDFBasicPrinter implements EvaluatorObserver {
         this.pdfManager = pdfManager;
     }
 
-    public void update(Submission submission) {
+    public boolean update(Submission submission) {
         pdfManager.createNewPage();
 
         // Add content to the page
@@ -21,6 +21,7 @@ public class PDFBasicPrinter implements EvaluatorObserver {
 
         // Close the content stream
         pdfManager.closeContentStream();
+        return true;
     }
 
     

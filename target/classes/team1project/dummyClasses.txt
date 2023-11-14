@@ -132,6 +132,7 @@ Class: Passenger
 package team1project;
 public class Passenger {
 
+    
     public Passenger(String passportNumber, String firstName, String lastName, String flightNo) {
      
     }

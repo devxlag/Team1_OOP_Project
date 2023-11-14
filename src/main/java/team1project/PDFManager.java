@@ -13,8 +13,13 @@ public class PDFManager {
     private PDDocument document;
     private PDPage currentPage;
     private PDPageContentStream currentContentStream;
+    private static int filenum = 1;
 
     public PDFManager() {
+        //document = new PDDocument();
+    }
+
+    public void createNewDocument() {
         document = new PDDocument();
     }
 
@@ -35,7 +40,7 @@ public class PDFManager {
             float yPosition = currentPage.getMediaBox().getHeight() - margin;
 
             currentContentStream.beginText();
-            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 12);
+            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 15);
              currentContentStream.newLineAtOffset(margin, yPosition);
             float lineHeight = 12;
 
@@ -61,7 +66,14 @@ public class PDFManager {
             currentContentStream.beginText();
             currentContentStream.setFont(PDType1Font.COURIER_BOLD, 12); 
             currentContentStream.newLineAtOffset(margin, yPosition);
-            currentContentStream.showText(additionalContent);
+                    
+
+            String[] lines = additionalContent.split("\n");
+            for (String line : lines) {
+                currentContentStream.showText(line);
+                currentContentStream.newLineAtOffset(0, -12); // Adjust the offset based on font size
+            }
+            //currentContentStream.showText(additionalContent);
             currentContentStream.endText();
             //currentContentStream.close();
         } catch (IOException e) {
@@ -83,7 +95,11 @@ public class PDFManager {
     
     public void saveAndClose() {
         try {
-            document.save("C:\\Users\\myahs\\OneDrive\\Documents\\COMP3607Proj\\final_submission.pdf");
+
+            String filename = "submission_results_" + filenum + ".pdf";
+            filenum++;
+            // document.save("C:\\Users\\Devon Murray\\Desktop\\submission_results\\" + filename);
+            document.save("src/main/java/team1project/reports/" + filename);
         } catch (IOException e) {
             e.printStackTrace();
             // Handle the exception appropriately

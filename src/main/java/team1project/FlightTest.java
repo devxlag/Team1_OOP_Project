@@ -56,8 +56,8 @@ public class FlightTest {
     @Test
     public void testFlightConstructor() {
         // Your test logic here
-        Flight flight = new Flight("FL123", "Destination", "Origin", LocalDateTime.now());
-        assertEquals("ABC123", flight.getFlightNo());
+       Flight flight = new Flight("FL123", "Destination", "Origin", LocalDateTime.now());
+       assertEquals("FL123", flight.getFlightNo());
         // Add more assertions as needed
     }
 

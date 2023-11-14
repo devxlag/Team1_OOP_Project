@@ -7,6 +7,7 @@ public class TestResult {
   private String methodName;
   private String status;
   private String errorMessage;
+  private String feedback;  
   private int score;
 
   // Getters and setters
@@ -50,6 +51,14 @@ public class TestResult {
   public void setScore(int score) {
       this.score = score;
   }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
 
   @Override
   public String toString() {

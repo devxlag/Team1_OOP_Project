@@ -60,6 +60,10 @@ public class Submission {
         filesSubmitted.add(fileName);
     }
 
+     public void addMissingFile(String fileName) {
+        missingFiles.add(fileName);
+    }
+
     public ArrayList<TestResult> getResults(){
         return results;
 
@@ -68,5 +72,11 @@ public class Submission {
     public void setResults(ArrayList<TestResult> results){
         this.results = results;
     }
+
+   
+
+   
+
+
     
 }

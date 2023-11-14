@@ -1,0 +1,183 @@
+Class: Flight
+
+package team1project.submissionResults;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+public class Flight {
+    
+
+    public Flight(String flightNo, String destination, String origin, LocalDateTime flightDate) {
+        
+    }
+
+    public String getFlightNo() {
+        return "";
+    }
+
+    public String getDestination() {
+        return "";
+    }
+
+    public String getOrigin() {
+        return "";
+    }
+
+    public LocalDateTime getFlightDate() {
+        return null;
+    }
+
+    public LuggageManifest getManifest() {
+        return null;
+    }
+
+    public String checkInLuggage(Passenger p) {
+        return "";
+    }
+
+    public String printLuggageManifest() {
+        return "";
+    }
+
+    public static int getAllowedLuggage(char cabinClass) {
+        return 0;
+    }
+
+    public String toString() {
+        return "";
+    }
+}
+End of Class
+
+
+Class: LuggageManifest
+package team1project.submissionResults;
+import java.util.ArrayList;
+
+public class LuggageManifest {
+    
+
+    public LuggageManifest() {
+        
+    }
+
+    public ArrayList<LuggageSlip> getLuggageSlips() {
+        return null;
+    }
+
+    public String addLuggage(Passenger p, Flight f) {
+        return null;
+    }
+
+    private double getExcessLuggageCost(int numPieces, int numAllowedPieces) {
+        return 0.0;
+    }
+
+    public String getExcessLuggageCostByPassenger(String passportNumber) {
+        return "";
+    }
+
+    public String toString() {
+        return "";
+    }
+}
+End of Class
+
+Class: LuggageSlip
+package team1project.submissionResults;
+
+public class LuggageSlip {
+   
+
+    public LuggageSlip(Passenger p, Flight f) {
+       
+    }
+
+    public LuggageSlip(Passenger p, Flight f, String label) {
+      
+    }
+
+    public String getLuggageSlipID() {
+        return "";
+    }
+
+    public String getLabel() {
+        return "";
+    }
+
+    public int getLuggageSlipIDCounter() {
+        return 0;
+    }
+
+    public Passenger getOwner() {
+        return null;
+    }
+
+    private void setLuggageSlipID(Passenger p, Flight f) {
+       
+    }
+
+    public boolean hasOwner(String passportNumber) {
+        return true;
+    }
+
+    public String toString() {
+        return "";
+    }
+}
+End of Class
+
+
+Class: Passenger
+package team1project.submissionResults;
+public class Passenger {
+
+    
+    public Passenger(String passportNumber, String firstName, String lastName, String flightNo) {
+        
+    }
+
+    public String getPassportNumber() {
+        System.out.println("getPassportNumber() called");
+        return "";
+    }
+
+    public String getFlightNo() {
+        return "";
+    }
+
+    public String getFirstName() {
+       return "";
+    }
+
+    public String getLastName() {
+        return "";
+    }
+
+    public int getNumLuggage() {
+        return 0;
+    }
+
+    public char getCabinClass() {
+        return 'a';
+    }
+
+    private void setNumLuggage() {
+        
+    }
+
+    private void assignRandomCabinClass() {
+      
+    }
+
+    private static int getRandomNumber(int min, int max) {
+        return 0;
+    }
+
+    public String toString() {
+        return "";
+    }
+}
+End of Class
+
+End

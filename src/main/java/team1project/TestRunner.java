@@ -1,55 +1,74 @@
 package team1project;
 import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
+import org.junit.runner.Request;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.net.URL;
 
 public class TestRunner {
 
-    public static ArrayList<TestResult> runTests() {
+    public static ArrayList<TestResult> runTests(Submission submission) throws ClassNotFoundException, MalformedURLException {
         JUnitCore junit = new JUnitCore();
         TestResultListener listener = new TestResultListener();
         junit.addListener(listener);
+        // File submissionClassesDir = new File("src/main/java/team1project");
+        // URLClassLoader submissionClassLoader = new URLClassLoader(new URL[]{submissionClassesDir.toURI().toURL()}, null);
 
-        //Result result = junit.run(FlightTest.class); giving error
+        // Class<?> flightTestClass = submissionClassLoader.loadClass("FlightTest.class");
+        // Class<?> passengerTestClass = submissionClassLoader.loadClass("PassengerTest.");
+
+        // Result result = junit.runClasses(flightTestClass, passengerTestClass);
+        System.out.println("Running tests... for " + submission.getStudentID());
+       
+        Result result = junit.run(FlightTest.class, PassengerTest.class); 
 
         ArrayList<TestResult> testResults = listener.getTestResults();
 
-        System.out.println("Test Results:");
-        for (TestResult testResult : testResults) {
-            System.out.println(testResult);
-        }
         return testResults;
-    }
+    }   
 
     static class TestResultListener extends RunListener {
-        private ArrayList<TestResult> testResults = new ArrayList<>();
+        private Map<String, TestResult> testResults = new HashMap<>();
+        private String currentTest;
+
+        @Override
+        public void testStarted(Description description) throws Exception {
+            currentTest = description.getClassName() + "#" + description.getMethodName();
+        }
 
         @Override
         public void testFailure(Failure failure) throws Exception {
-            Description description = failure.getDescription();
             TestResult testResult = new TestResult();
-            testResult.setClassName(description.getClassName());
-            testResult.setMethodName(description.getMethodName());
+            testResult.setClassName(failure.getDescription().getClassName());
+            testResult.setMethodName(failure.getDescription().getMethodName());            
             testResult.setStatus("FAILED");
             testResult.setErrorMessage(failure.getException().getMessage());
-            testResults.add(testResult);
+            testResults.put(currentTest, testResult);
         }
 
         @Override
         public void testFinished(Description description) throws Exception {
-            TestResult testResult = new TestResult();
-            testResult.setClassName(description.getClassName());
-            testResult.setMethodName(description.getMethodName());
-            testResult.setStatus("PASSED");
-            testResults.add(testResult);
+            if (!testResults.containsKey(currentTest)) {
+                TestResult testResult = new TestResult();
+                testResult.setClassName(description.getClassName());
+                testResult.setMethodName(description.getMethodName());
+                testResult.setStatus("PASSED");
+                testResults.put(currentTest, testResult);
+            }
         }
 
         public ArrayList<TestResult> getTestResults() {
-            return testResults;
+            return new ArrayList<>(testResults.values());
         }
     }
 }
