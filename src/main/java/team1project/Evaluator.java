@@ -3,18 +3,21 @@ package team1project;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
 
     private ZipFile compositeTreeRoot; // Root of the composite tree
-    private DummyJavaFileGenerator dummyJavaFileGenerator;
+    private DummyJavaFileGenerator dummyJavaFileGenerator;    
     private EvaluatorObserver observer1;
     private EvaluatorObserver observer2;
     private EvaluatorObserver observer3;
     private Submission submission;
 
     public Evaluator() {       
-        this.dummyJavaFileGenerator = new DummyJavaFileGenerator();
+        this.dummyJavaFileGenerator = new DummyJavaFileGenerator(); 
+        registerObserver(new ScoreCalculator());       
     }
 
     public void update(ZipFile zipFile) {
@@ -49,6 +52,13 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
           for(AbstractFile child : zipFile.getChildren()) {
             traverseAndWriteFiles(child, directory); 
           }
+        //   setSubmission();
+        //   try {
+        //     runTest();
+        // } catch (Exception e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
       
         } else if(node instanceof JavaFile) {
           
@@ -63,6 +73,19 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
         }      
       }
 
+      private void setSubmission(){
+        this.submission = new Submission();
+      }
+
+      public void runTest() throws Exception {
+
+        ArrayList<TestResult> results = JavaFileCompiler.compileAndRunTests();
+        
+        submission.setResults(results);               
+        notifyObservers(observer1);
+
+      }
+
       public void reset(){
         try {
             dummyJavaFileGenerator.generateFiles("src/main/java/team1project/dummyClasses.txt", "src/test/java/team1project");
@@ -75,9 +98,9 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
     @Override
     public void registerObserver(EvaluatorObserver observer) {
         
-        // if (observer instance of ScoreCalcualtor){
-        //     observer1 = observer;
-        // }
+        if (observer instanceof ScoreCalculator){
+            observer1 = observer;
+        }
         // else if (observer instance of Feedback){
         //     observer2 = observer;
         // }
@@ -101,9 +124,9 @@ public class Evaluator implements SubmissionProcessorObserver, EvaluatorSubject{
 
     @Override
     public void notifyObservers(EvaluatorObserver observer) {
-        // if (observer instance of ScoreCalcualtor){
-        //     observer1.update(submission);
-        // }
+        if (observer instanceof ScoreCalculator){
+            observer1.update(submission);
+        }
         // else if (observer instance of Feedback){
         //     observer2.update(submission);
         // }

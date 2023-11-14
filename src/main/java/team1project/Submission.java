@@ -10,7 +10,7 @@ public class Submission {
     private String feedback;
     private ArrayList<String> filesSubmitted;
     private ArrayList<String> missingFiles;
-    private ArrayList<String> results;
+    private ArrayList<TestResult> results;
     
 
     public Submission() {
@@ -58,6 +58,15 @@ public class Submission {
 
     public void addFileSubmitted(String fileName) {
         filesSubmitted.add(fileName);
+    }
+
+    public ArrayList<TestResult> getResults(){
+        return results;
+
+    }
+
+    public void setResults(ArrayList<TestResult> results){
+        this.results = results;
     }
     
 }
