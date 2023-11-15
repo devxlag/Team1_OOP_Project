@@ -6,8 +6,12 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.IOException;
+import java.io.StringWriter;
+
+
 
 public class PDFManager {
     private PDDocument document;
@@ -33,6 +37,14 @@ public class PDFManager {
             e.printStackTrace();
             // Handle the exception appropriately
         }
+    }
+    public PDPage getCurrentPage()
+    {
+        return currentPage;
+    }
+    public PDPageContentStream getCurrentContentStream()
+    {
+        return currentContentStream;
     }
     public void addBasicContent(String[] lines) {
         try {
@@ -118,6 +130,29 @@ public class PDFManager {
             }
         }
     }
+   
+
+    public String getGeneratedContent() {
+        // Check if the document is null
+        if (document == null) {
+            throw new IllegalStateException("PDF document is not created.");
+        }
+
+        try {
+            
+            PDFTextStripper pdfTextStripper = new PDFTextStripper();
+            StringWriter writer = new StringWriter();
+            pdfTextStripper.writeText(document, writer);
+
+            return writer.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+            return null;
+        }
+    }
 }
+
+
 
 
