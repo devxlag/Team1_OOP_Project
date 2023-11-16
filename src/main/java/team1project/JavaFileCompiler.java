@@ -13,8 +13,6 @@ import org.junit.runner.notification.Failure;
 public class JavaFileCompiler {
 
     public static boolean compileJavaFiles() throws Exception{
-
-
         // Compile Classes
         String outputDirectory = "target/classes";
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -27,7 +25,11 @@ public class JavaFileCompiler {
                         new File("src/main/java/team1project/LuggageManifest.java"),
                         new File("src/main/java/team1project/LuggageSlip.java"),
                         new File("src/main/java/team1project/FlightTest.java"),
-                        new File("src/main/java/team1project/PassengerTest.java")
+                        new File("src/main/java/team1project/PassengerTest.java"),
+                        new File("src/main/java/team1project/LuggageManifestTest.java"),
+                        new File("src/main/java/team1project/LuggageSlipTest.java"),
+                        new File("src/main/java/team1project/LuggageManagementSystem.java"),
+                        new File("src/main/java/team1project/LuggageManagementSystemTest.java")
                 )
         );
 
@@ -60,6 +62,10 @@ public class JavaFileCompiler {
         filesToDelete.add("LuggageSlip.class");
         filesToDelete.add("Passenger.class");
         filesToDelete.add("PassengerTest.class");
+        filesToDelete.add("LuggageManifestTest.class");
+        filesToDelete.add("LuggageSlipTest.class");
+        filesToDelete.add("LuggageManagementSystem.class");
+        filesToDelete.add("LuggageManagementSystemTest.class");
 
         if (directory.exists()) {
             File[] files = directory.listFiles();

@@ -61,7 +61,7 @@ public class LuggageManifest {
         
     }
 
-    public ArrayList<LuggageSlip> getLuggageSlips() {
+    public ArrayList<LuggageSlip> getSlips() {
         return null;
     }
 
@@ -84,7 +84,7 @@ public class LuggageManifest {
 End of Class
 
 Class: LuggageSlip
-package team1project;
+ package team1project;
 
 public class LuggageSlip {
    
@@ -134,10 +134,10 @@ public class Passenger {
 
     
     public Passenger(String passportNumber, String firstName, String lastName, String flightNo) {
-     
+        
     }
 
-    public String getPassportNumber() {
+    public String getPassportNumber() {        
         return "";
     }
 
@@ -175,6 +175,15 @@ public class Passenger {
 
     public String toString() {
         return "";
+    }
+}
+End of Class
+
+
+Class:LuggageManagementSystem
+package team1project;
+public class LuggageManagementSystem {
+    public static void main(String[] args){
     }
 }
 End of Class

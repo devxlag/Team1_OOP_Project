@@ -8,15 +8,15 @@ import static org.junit.Assert.*;
 public class PDFBasicPrinterTest {
 
     
-     private PDFManager pdfManager;
-    private PDFBasicPrinter pdfBasicPrinter;
+     private PDFPrinter pdfPrinter;  
 
     @Before
     public void setUp() {
         // Create an instance of PDFManager for testing
-        pdfManager = new PDFManager();
-        pdfBasicPrinter = new PDFBasicPrinter(pdfManager);
-        pdfManager.createNewDocument();
+        
+        
+        pdfPrinter = new PDFPrinter();
+        pdfPrinter.createNewDocument();
     }
 
     @Test
@@ -26,18 +26,18 @@ public class PDFBasicPrinterTest {
         submission.setStudentID("12345");
         submission.setStudentName("John Doe");
       
-
-        // Call the update method
-        boolean result = pdfBasicPrinter.update(submission);
+        pdfPrinter.createNewPage();
+        // Add content to the page
+        String[] basicContent = {"Student Name: " + submission.getStudentName(), "Student ID: " + submission.getStudentID()};
+        pdfPrinter.addBasicContent(basicContent);
+        // Close the content stream
+        pdfPrinter.closeContentStream();
 
         // Check if the PDFManager was called and if the result is as expected and if data in pdfFile matches test data
-        assertTrue(result);
-        assertNotNull(pdfManager.getCurrentPage());
-        String generatedContent = pdfManager.getGeneratedContent();
+        assertNotNull(pdfPrinter.getCurrentPage());
+        String generatedContent = pdfPrinter.getGeneratedContent();
         assertTrue(generatedContent.contains("Student ID: 12345"));
         assertTrue(generatedContent.contains("Student Name: John Doe"));
    
-      
-
     }
 }

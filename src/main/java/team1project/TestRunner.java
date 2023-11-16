@@ -21,16 +21,10 @@ public class TestRunner {
         JUnitCore junit = new JUnitCore();
         TestResultListener listener = new TestResultListener();
         junit.addListener(listener);
-        // File submissionClassesDir = new File("src/main/java/team1project");
-        // URLClassLoader submissionClassLoader = new URLClassLoader(new URL[]{submissionClassesDir.toURI().toURL()}, null);
-
-        // Class<?> flightTestClass = submissionClassLoader.loadClass("FlightTest.class");
-        // Class<?> passengerTestClass = submissionClassLoader.loadClass("PassengerTest.");
-
-        // Result result = junit.runClasses(flightTestClass, passengerTestClass);
+      
         System.out.println("Running tests... for " + submission.getStudentID());
        
-        Result result = junit.run(FlightTest.class, PassengerTest.class); 
+        Result result = junit.run(FlightTest.class, PassengerTest.class,LuggageManifestTest.class, LuggageSlipTest.class);//LuggageManagementSystemTest.class); 
 
         ArrayList<TestResult> testResults = listener.getTestResults();
 
@@ -49,9 +43,12 @@ public class TestRunner {
         @Override
         public void testFailure(Failure failure) throws Exception {
             TestResult testResult = new TestResult();
-            testResult.setClassName(failure.getDescription().getClassName());
-            testResult.setMethodName(failure.getDescription().getMethodName());            
+            Description description = failure.getDescription();
+            testResult.setTestName(description.getDisplayName());
+            testResult.setClassName(description.getClassName());
+            testResult.setMethodName(description.getMethodName());            
             testResult.setStatus("FAILED");
+            testResult.setScore(0);
             testResult.setErrorMessage(failure.getException().getMessage());
             testResults.put(currentTest, testResult);
         }
@@ -60,9 +57,11 @@ public class TestRunner {
         public void testFinished(Description description) throws Exception {
             if (!testResults.containsKey(currentTest)) {
                 TestResult testResult = new TestResult();
+                testResult.setTestName(description.getDisplayName());
                 testResult.setClassName(description.getClassName());
                 testResult.setMethodName(description.getMethodName());
                 testResult.setStatus("PASSED");
+                testResult.setScore(1);
                 testResults.put(currentTest, testResult);
             }
         }

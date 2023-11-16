@@ -4,17 +4,17 @@ package team1project;
 
 public class PDFBaseDecorator implements EvaluatorObserver
 {
-    private final PDFManager PDFManager;
+    private final PDFPrinter pdfPrinter;
    
-    public PDFBaseDecorator( PDFManager pdfManager) {       
-        this.PDFManager = pdfManager;
+    public PDFBaseDecorator() {       
+        this.pdfPrinter = new PDFPrinter();
     }
 
-    protected PDFManager getPDFManager() {
-        return PDFManager;
+    protected PDFPrinter getPDFManager() {
+        return pdfPrinter;
     }
 
-    public boolean update(Submission submission){
+    public boolean update(Evaluator evaluator){
         getPDFManager().saveAndClose();         
         return true;
     }

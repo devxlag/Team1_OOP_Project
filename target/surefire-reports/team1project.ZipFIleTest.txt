@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: team1project.ZipFIleTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in team1project.ZipFIleTest
+testDisplay  Time elapsed: 0 s  <<< FAILURE!
+org.junit.ComparisonFailure: 
+expected:<Zip File: test.zip[
+File: file.txt]
+> but was:<Zip File: test.zip[]
+>
+	at team1project.ZipFIleTest.testDisplay(ZipFIleTest.java:44)
+

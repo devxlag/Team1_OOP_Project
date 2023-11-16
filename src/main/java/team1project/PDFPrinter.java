@@ -1,7 +1,5 @@
 package team1project;
 
-
-    
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -13,13 +11,13 @@ import java.io.StringWriter;
 
 
 
-public class PDFManager {
+public class PDFPrinter {
     private PDDocument document;
     private PDPage currentPage;
     private PDPageContentStream currentContentStream;
     private static int filenum = 1;
 
-    public PDFManager() {
+    public PDFPrinter() {
         //document = new PDDocument();
     }
 
@@ -52,7 +50,7 @@ public class PDFManager {
             float yPosition = currentPage.getMediaBox().getHeight() - margin;
 
             currentContentStream.beginText();
-            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 15);
+            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 5);
              currentContentStream.newLineAtOffset(margin, yPosition);
             float lineHeight = 12;
 
@@ -76,7 +74,7 @@ public class PDFManager {
             float yPosition = currentPage.getMediaBox().getHeight() - margin;
 
             currentContentStream.beginText();
-            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 12); 
+            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 5); 
             currentContentStream.newLineAtOffset(margin, yPosition);
                     
 

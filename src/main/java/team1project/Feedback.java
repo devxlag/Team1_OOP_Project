@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class Feedback implements EvaluatorObserver {
 
     @Override
-    public boolean update(Submission submission) {
+    public boolean update(Evaluator evaluator) {
+
+        Submission submission = evaluator.getSubmission();
         ArrayList<TestResult> results = submission.getResults();
         boolean done = false;
 

@@ -63,10 +63,13 @@ public class TestResult {
   @Override
   public String toString() {
       return "TestResult{" +
+              "testName='" + testName + '\'' +
               "className='" + className + '\'' +
               ", methodName='" + methodName + '\'' +
               ", status='" + status + '\'' +
               ", errorMessage='" + errorMessage + '\'' +
+              ", score='" + score + '\'' +
+              ", feedback='" + feedback + '\'' +
               '}';
   }
 

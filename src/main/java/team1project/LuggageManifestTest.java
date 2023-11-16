@@ -1,23 +1,27 @@
 package team1project;
 
+
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 
-public class TestLuggageManifest {
+public class LuggageManifestTest {
 
     private LuggageManifest luggageManifest;
 
-    @Before
+    @Before    
     public void setUp() {
         luggageManifest = new LuggageManifest();
     }
 
     @Test
+    @DisplayName("Test addLuggageSlip method")
     public void testAddLuggage() {
         LocalDateTime flightDate = LocalDateTime.now();
-        
+
         Flight flight1 = new Flight("ABC123", "Destination1", "Origin1", flightDate);
         Passenger passenger1 = new Passenger("123456", "Joe", "Biden", "ABC123");
 
@@ -36,9 +40,10 @@ public class TestLuggageManifest {
     }
 
     @Test
+    @DisplayName("Test getExcessLuggageCostByPassenger method")
     public void testGetExcessLuggageCostByPassenger() {
         LocalDateTime flightDate = LocalDateTime.now();
-        
+
         Flight flight = new Flight("ABC123", "Destination", "Origin", flightDate);
         Passenger passenger = new Passenger("123456", "John", "Doe", "ABC123");
 
@@ -54,9 +59,10 @@ public class TestLuggageManifest {
     }
 
     @Test
+    @DisplayName("Test printLuggageManifest method")
     public void testPrintLuggageManifest() {
         LocalDateTime flightDate = LocalDateTime.now();
-        
+
         Flight flight = new Flight("ABC123", "Destination", "Origin", flightDate);
         Passenger passenger1 = new Passenger("123456", "John", "Doe", "ABC123");
         Passenger passenger2 = new Passenger("789012", "Jane", "Smith", "ABC123");

@@ -42,10 +42,10 @@ public class SubmissionTest {
     @Test
     public void testSetAndGetScore() {
         Submission submission = new Submission();
-        assertEquals(0, submission.getScore());
+        assertEquals(0, submission.getTotalScore());
 
-        submission.setScore(85);
-        assertEquals(85, submission.getScore());
+        submission.setTotalScore(85);
+        assertEquals(85, submission.getTotalScore());
     }
 
     @Test
