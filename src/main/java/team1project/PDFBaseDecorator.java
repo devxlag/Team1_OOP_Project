@@ -1,6 +1,6 @@
 package team1project;
 
-
+import java.io.File;
 
 public class PDFBaseDecorator implements EvaluatorObserver
 {
@@ -15,7 +15,10 @@ public class PDFBaseDecorator implements EvaluatorObserver
     }
 
     public boolean update(Evaluator evaluator){
-        getPDFManager().saveAndClose();         
+        String submissionPath = evaluator.getSubmission().getSubmissionPath();
+        String studentID = evaluator.getSubmission().getStudentID();
+        String savePath = submissionPath + File.separator + studentID + ".pdf";
+        getPDFManager().saveAndClose(savePath);         
         return true;
     }
 }
