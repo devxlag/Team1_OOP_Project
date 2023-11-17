@@ -6,11 +6,14 @@ import java.util.List;
 
 class ZipFile implements AbstractFile{
     private String fileName;
+    private ArrayList<String> submittedFileNames;
     private List<AbstractFile> contents;
+    private String path;
 
     public ZipFile(String fileName) {
         this.fileName = fileName;
         this.contents = new ArrayList<>();
+        this.submittedFileNames = new ArrayList<>();
     }
 
     public void addComponent(AbstractFile component) {
@@ -31,6 +34,18 @@ class ZipFile implements AbstractFile{
 
     public List<AbstractFile> getChildren() {
         return contents;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public ArrayList<String> getSubmittedFileNames(){
+        return submittedFileNames;
     }
 }
 
