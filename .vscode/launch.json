@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SubmissionProcessor",
+            "request": "launch",
+            "mainClass": "team1project.SubmissionProcessor",
+            "projectName": "team1project"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

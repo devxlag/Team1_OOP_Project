@@ -103,13 +103,11 @@ public class PDFPrinter {
         }
     }
     
-    public void saveAndClose() {
+    public void saveAndClose(String savePath) {
         try {
-
-            String filename = "submission_results_" + filenum + ".pdf";
-            filenum++;
+            
             // document.save("C:\\Users\\Devon Murray\\Desktop\\submission_results\\" + filename);
-            document.save("src/main/java/team1project/reports/" + filename);
+            document.save(savePath);
         } catch (IOException e) {
             e.printStackTrace();
             // Handle the exception appropriately

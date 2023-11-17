@@ -1,0 +1,6 @@
+testStringAttribute 4
+assertStringAttribute 4
+testNumLuggageAttribute 1
+testPassengerConstructor 5
+testAssignRandomCabinClass 2
+testToStringMethodFormat 3
