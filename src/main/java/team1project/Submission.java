@@ -16,6 +16,7 @@ public class Submission {
     private ArrayList<String> filesSubmitted;
     private ArrayList<String> missingFiles;
     private ArrayList<TestResult> results;
+    private String submissionPath;
     
 
     public Submission() {
@@ -120,6 +121,14 @@ public class Submission {
     
     public void setResults(ArrayList<TestResult> results){
         this.results = results;
+    }
+
+    public void setSubmissionPath(String submissionPath){
+        this.submissionPath = submissionPath;
+    }
+
+    public String getSubmissionPath(){
+        return submissionPath;
     }
 
     

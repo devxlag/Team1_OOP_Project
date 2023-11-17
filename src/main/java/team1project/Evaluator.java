@@ -20,14 +20,19 @@ public class Evaluator implements EvaluatorSubject{
     private EvaluatorObserver pdfObserver;
     private Submission submission;
     private static String mainDirectory = "src/main/java/team1project";
-    
+    private ArrayList<String> requiredFiles;
 
     public Evaluator() {       
-             
+        requiredFiles = new ArrayList<>();
+        requiredFiles.add("Passenger.java");
+        requiredFiles.add("Flight.java");
+        requiredFiles.add("LuggageSlip.java");
+        requiredFiles.add("LuggageManifest.java");
+        requiredFiles.add("LuggageManagmentSystem.java");  
     }
 
     public void registerObservers(){
-        registerObserver(new ZipSubmissionProcessor());
+        registerObserver(new ZipSubmissionProcessor(requiredFiles));
         registerObserver(new ScoreCalculator()); 
         registerObserver(new Feedback());            
         registerObserver(new FeedbackFormatDecorator());
@@ -98,27 +103,29 @@ public class Evaluator implements EvaluatorSubject{
             if(node instanceof ZipFile) {
                 ZipFile zipFile = (ZipFile) node;
                 setSubmission();
+                getSubmission().setSubmissionPath(zipFile.getPath());
                 studentID = extractIdFromFileName(zipFile.getFileName());
                 boolean written = false;
                
                 System.out.print("\nWriting Java files to temp directory: for Student ID: " + studentID);
                 
                 for(AbstractFile child : zipFile.getChildren()) {
+                   // child.display();
                     written = writeJavaFile(child, directory); 
                 }
                 if(written){
-                    System.out.println("Java files written to temp directory.");
+                    System.out.println("\n Java files written to temp directory.");
                     
                     submission.setStudentID(studentID);
                     System.out.println("Running Test for: " + submission.getStudentID());
                     try {
-                        runTest();
+                     runTest();
                         
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                    reset();
+                    //reset();
                     System.out.println("Temp Java files reset.");
                     
                 }
@@ -129,7 +136,6 @@ public class Evaluator implements EvaluatorSubject{
             return true;
         return false;
     }
-
 
     private static void cleanTargetDirectory(String targetDirectory) {
         System.out.println("Cleaning target directory: " + targetDirectory);
@@ -162,11 +168,18 @@ public class Evaluator implements EvaluatorSubject{
             if (JavaFileCompiler.compileJavaFiles()){
 
             
-               results = TestRunner.runTests(submission);
-                submission.setResults(results); 
-                notifyObservers(scoreObserver);
+                if (TestRunner.runTests(submission)){
+                    if(submission.getResults() != null){
+                        
+                        System.out.println("Test Results: " + submission.getResults());
+                    notifyObservers(scoreObserver);
+                    }
+                    else{
+                        System.out.println("No test results found.");
+                    }        
 
-            }
+                 }
+             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

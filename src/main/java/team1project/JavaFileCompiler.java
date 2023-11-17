@@ -17,19 +17,19 @@ public class JavaFileCompiler {
         String outputDirectory = "target/classes";
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-        cleanTargetDirectory(outputDirectory);
+        //cleanTargetDirectory(outputDirectory);
         Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(
                 Arrays.asList(
-                        new File("src/main/java/team1project/Flight.java"),
-                        new File("src/main/java/team1project/Passenger.java"),
-                        new File("src/main/java/team1project/LuggageManifest.java"),
-                        new File("src/main/java/team1project/LuggageSlip.java"),
-                        new File("src/main/java/team1project/FlightTest.java"),
-                        new File("src/main/java/team1project/PassengerTest.java"),
-                        new File("src/main/java/team1project/LuggageManifestTest.java"),
-                        new File("src/main/java/team1project/LuggageSlipTest.java"),
-                        new File("src/main/java/team1project/LuggageManagementSystem.java"),
-                        new File("src/main/java/team1project/LuggageManagementSystemTest.java")
+                       //new File("src/main/java/team1project/Flight.java"),
+                        new File("src/main/java/team1project/Passenger.java")
+                        // new File("src/main/java/team1project/LuggageManifest.java"),
+                        // new File("src/main/java/team1project/LuggageSlip.java"),
+                        // new File("src/main/java/team1project/FlightTest.java"),
+                       // new File("src/main/java/team1project/PassengerTest.java")
+                        // new File("src/main/java/team1project/LuggageManifestTest.java"),
+                        // new File("src/main/java/team1project/LuggageSlipTest.java"),
+                        // new File("src/main/java/team1project/LuggageManagementSystem.java"),
+                        // new File("src/main/java/team1project/LuggageManagementSystemTest.java")
                 )
         );
 
@@ -56,16 +56,16 @@ public class JavaFileCompiler {
     private static void cleanTargetDirectory(String targetDirectory) {
         File directory = new File(targetDirectory+ "/team1project");
         ArrayList<String> filesToDelete = new ArrayList<String>();
-        filesToDelete.add("Flight.class");
-        filesToDelete.add("FlightTest.class");
-        filesToDelete.add("LuggageManifest.class");
-        filesToDelete.add("LuggageSlip.class");
+//        filesToDelete.add("Flight.class");
+//        filesToDelete.add("FlightTest.class");
+//        filesToDelete.add("LuggageManifest.class");
+//        filesToDelete.add("LuggageSlip.class");
         filesToDelete.add("Passenger.class");
         filesToDelete.add("PassengerTest.class");
-        filesToDelete.add("LuggageManifestTest.class");
-        filesToDelete.add("LuggageSlipTest.class");
-        filesToDelete.add("LuggageManagementSystem.class");
-        filesToDelete.add("LuggageManagementSystemTest.class");
+//        filesToDelete.add("LuggageManifestTest.class");
+//        filesToDelete.add("LuggageSlipTest.class");
+//        filesToDelete.add("LuggageManagementSystem.class");
+//        filesToDelete.add("LuggageManagementSystemTest.class");
 
         if (directory.exists()) {
             File[] files = directory.listFiles();
@@ -73,9 +73,9 @@ public class JavaFileCompiler {
                 for (File file : files) {                                       
                     if (!file.isDirectory() && file.getName().endsWith(".class") && filesToDelete.contains(file.getName())) {
                         System.out.println("Deleting file: " + file.getName());
-                        if(file.getName() == "Flight.class"){
-                            printFileContents(file);
-                        }
+                        // if(file.getName() == "Flight.class"){
+                        //     printFileContents(file);
+                        // }
                        
                         file.delete();
                      }
