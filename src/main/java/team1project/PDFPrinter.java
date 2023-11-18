@@ -33,7 +33,7 @@ public class PDFPrinter {
             currentContentStream = new PDPageContentStream(document, currentPage, PDPageContentStream.AppendMode.APPEND, true);
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception appropriately
+         
         }
     }
     public PDPage getCurrentPage()
@@ -64,7 +64,7 @@ public class PDFPrinter {
             currentContentStream.endText();
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception appropriately
+            
         }
     }
 
@@ -88,7 +88,7 @@ public class PDFPrinter {
             //currentContentStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception appropriately
+            
         }
     }
     public void closeContentStream() {
@@ -99,7 +99,7 @@ public class PDFPrinter {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception appropriately
+           
         }
     }
     
@@ -110,7 +110,7 @@ public class PDFPrinter {
             document.save(savePath);
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception appropriately
+           
         } finally {
             closeDocument();
         }
@@ -122,7 +122,7 @@ public class PDFPrinter {
                 document.close();
             } catch (IOException e) {
                 e.printStackTrace();
-                // Handle the exception appropriately
+               
             }
         }
     }

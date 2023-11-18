@@ -55,6 +55,10 @@ public class Evaluator implements EvaluatorSubject{
         this.submission = null;
         this.submission = new Submission();
     }
+    public void setSubmission(Submission submission)
+   { 
+    this.submission=submission;
+   }
 
     public Submission getSubmission(){
         return submission;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class FeedbackFormatDecorator extends PDFBaseDecorator{
     
+private String feedbackContent;
 
     public FeedbackFormatDecorator() {
         super();
@@ -12,7 +13,7 @@ public class FeedbackFormatDecorator extends PDFBaseDecorator{
 
     @Override
     public boolean update(Evaluator evaluator) {
-        Submission submission = evaluator.getSubmission();
+        try{Submission submission = evaluator.getSubmission();
                  
         getPDFManager().createNewDocument();
         
@@ -70,9 +71,17 @@ public class FeedbackFormatDecorator extends PDFBaseDecorator{
         getPDFManager().createNewPage();
         getPDFManager().addContentToStream( correctiveFeedback);
         getPDFManager().closeContentStream();
+        
+        feedbackContent=getPDFManager().getGeneratedContent();
         super.update(evaluator);
+
+        
         
         return true;
+    }catch (Exception e) {
+            e.printStackTrace();
+            return false; 
+        }
     }
 
     
@@ -81,4 +90,9 @@ public class FeedbackFormatDecorator extends PDFBaseDecorator{
     private static String getTestInfo(TestResult tr) {
         return tr.getTestName() + " " + tr.getStatus() + " " + tr.getScore() + " Error: " + tr.getErrorMessage();
     }
+
+    public String getFeedbackContent() {
+        return feedbackContent;
+    }
+
 }
