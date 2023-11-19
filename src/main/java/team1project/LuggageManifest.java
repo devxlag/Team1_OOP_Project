@@ -1,14 +1,16 @@
+
+
 package team1project;
 import java.util.ArrayList;
 
 public class LuggageManifest {
-
+    
 
     public LuggageManifest() {
-
+        
     }
 
-    public ArrayList<LuggageSlip> getLuggageSlips() {
+    public ArrayList<LuggageSlip> getSlips() {
         return null;
     }
 

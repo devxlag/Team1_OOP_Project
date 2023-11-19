@@ -1,12 +1,13 @@
+
 package team1project;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Flight {
-
+    
 
     public Flight(String flightNo, String destination, String origin, LocalDateTime flightDate) {
-
+        
     }
 
     public String getFlightNo() {
