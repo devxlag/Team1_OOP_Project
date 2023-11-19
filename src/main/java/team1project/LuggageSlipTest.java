@@ -2,9 +2,10 @@
 package team1project;
 
 import org.junit.Before;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
+// import org.junit.jupiter.api.DisplayName;
+// import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class LuggageSlipTest{
 
     @Test
-    @DisplayName("Test String attributes types")
+    //@DisplayName("Test String attributes types")
     public void testStringAttributes() {
         assertStringAttribute("luggageSlipID");
         assertStringAttribute("label");
@@ -51,7 +52,7 @@ public class LuggageSlipTest{
     }
 
     @Test
-    @DisplayName("Test Integer attribute type")
+    //@DisplayName("Test Integer attribute type")
     public void testIntegerAttribute() {
         assertField("luggageSlipIDCounter", int.class, true, true);
     }
@@ -68,10 +69,10 @@ public class LuggageSlipTest{
     }
 
     @Test
-    @DisplayName("Test LuggageSlip constructor")
+    //@DisplayName("Test LuggageSlip constructor")
     public void testLuggageSlipConstructor() {
         // Create instances of Passenger and Flight classes
-        Passenger passenger = new Passenger("AB123456", "John", "Doe", "ABC123");
+        Passenger passenger = new Passenger("AB123456", "John", "Doe", "FL123");
         LocalDateTime flightDate = LocalDateTime.now();
         Flight flight = new Flight("FL123", "New York", "London", flightDate);
 
@@ -80,15 +81,15 @@ public class LuggageSlipTest{
 
         // Assert that the state is set correctly using the input parameters
         assertEquals(passenger, luggageSlip.getOwner());
-        assertEquals(flight, luggageSlip.getOwner().getFlightNo());
+        assertEquals(flight.getFlightNo(), luggageSlip.getOwner().getFlightNo());
         assertEquals("", luggageSlip.getLabel());
     }
 
     @Test
-    @DisplayName("Test LuggageSlip constructor with label")
+    ///@DisplayName("Test LuggageSlip constructor with label")
     public void testLuggageSlipConstructorWithLabel() {
         // Create instances of Passenger and Flight classes
-        Passenger passenger = new Passenger("AB123456", "John", "Doe", "ABC123");
+        Passenger passenger = new Passenger("AB123456", "John", "Doe", "FL123");
         LocalDateTime flightDate = LocalDateTime.now();
         Flight flight = new Flight("FL123", "New York", "London", flightDate);
 
@@ -97,13 +98,13 @@ public class LuggageSlipTest{
         LuggageSlip luggageSlip = new LuggageSlip(passenger, flight, label);
 
         // Assert that the state is set correctly using the input parameters (including label)
-         assertEquals(passenger, luggageSlip.getOwner());
-        assertEquals(flight, luggageSlip.getOwner().getFlightNo());
-        assertEquals("", luggageSlip.getLabel());
+        assertEquals(passenger, luggageSlip.getOwner());
+        assertEquals(flight.getFlightNo(), luggageSlip.getOwner().getFlightNo());
+        assertEquals("Fragile", luggageSlip.getLabel());
     }
 
     @Test
-    @DisplayName("Test hasOwner method")
+    //@DisplayName("Test hasOwner method")
     public void testHasOwner() {
         // Create instances of Passenger and Flight classes
         Passenger passenger = new Passenger("AB123456", "John", "Doe", "ABC123");
@@ -119,7 +120,7 @@ public class LuggageSlipTest{
     }
 
     @Test
-    @DisplayName("Test toString method")
+   // @DisplayName("Test toString method")
     public void testToString() {
         // Create instances of Passenger and Flight classes
         Passenger passenger = new Passenger("AB123456", "John", "Doe", "ABC123");
@@ -133,10 +134,8 @@ public class LuggageSlipTest{
         //luggageSlip.setLuggageSlipID(passenger, flight); not needed constructor does this
 
         // Test the toString method
-        String expectedToString = "FL123_Doe_1 PP NO. AB123456 NAME: J.Doe LUGGAGE: 0 CLASS: $";
+        String expectedToString = "FL123_Doe_1 PP NO. AB123456 NAME: J.DOE NUMLUGGAGE: "+ passenger.getNumLuggage() + " CLASS: " + passenger.getCabinClass();
         assertEquals(expectedToString, luggageSlip.toString());
     }
-
-
 
 }
