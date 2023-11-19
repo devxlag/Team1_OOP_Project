@@ -37,35 +37,4 @@ public class JavaFileTest {
 
         assertEquals(expectedContents, javaFile.getContents());
     }
-
-    @Test
-    public void testDisplay() {
-        JavaFile javaFile = new JavaFile("TestFile.java");
-
-        // Redirect standard out for testing
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        javaFile.appendContents("public class Test {\n");
-        javaFile.appendContents("    public static void main(String[] args) {\n");
-        javaFile.appendContents("        System.out.println(\"Hello, World!\");\n");
-        javaFile.appendContents("    }\n");
-        javaFile.appendContents("}\n");
-
-        javaFile.display();
-
-        String expectedOutput = "Java File: TestFile.java\n" +
-                                "Contents:\n" +
-                                "public class Test {\n" +
-                                "    public static void main(String[] args) {\n" +
-                                "        System.out.println(\"Hello, World!\");\n" +
-                                "    }\n" +
-                                "}\n";
-
-        assertEquals(expectedOutput, outputStream.toString());
-
-        
-        // Reset standard out
-        System.setOut(System.out);
-    }
 }

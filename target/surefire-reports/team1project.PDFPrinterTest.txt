@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: team1project.PDFPrinterTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! - in team1project.PDFPrinterTest
+testSaveAndClose  Time elapsed: 0.012 s  <<< FAILURE!
+java.lang.AssertionError
+	at team1project.PDFPrinterTest.testSaveAndClose(PDFPrinterTest.java:101)
+

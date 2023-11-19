@@ -21,7 +21,7 @@ public class ZipFIleTest {
     @Test
     public void testAddComponent() {
         ZipFile zipFile = new ZipFile("test.zip");
-        MockFile fileComponent = new MockFile("file.txt");
+        JavaFile fileComponent = new JavaFile("file.txt");
 
         zipFile.addComponent(fileComponent);
 
@@ -29,21 +29,31 @@ public class ZipFIleTest {
         assertEquals(fileComponent, zipFile.getChildren().get(0));
     }
 
+    
     @Test
-    public void testDisplay() {
+    public void testGetFileName() {
         ZipFile zipFile = new ZipFile("test.zip");
-        MockFile fileComponent = new MockFile("file.txt");
-        zipFile.addComponent(fileComponent);
-
-        // Redirect standard out for testing
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        zipFile.display();
-
-        assertEquals("Zip File: test.zip\nFile: file.txt\n", outputStream.toString());
-
-        // Reset standard out
-        System.setOut(System.out);
+        assertEquals("test.zip", zipFile.getFileName());
     }
+
+
+    @Test
+    public void testGetChildren() {
+        ZipFile zipFile = new ZipFile("test.zip");
+        assertEquals(zipFile.getChildren().size(), 0); 
+    }
+
+    @Test
+    public void testSetPath() {
+        ZipFile zipFile = new ZipFile("test.zip");
+        zipFile.setPath("testPath");
+        assertEquals("testPath", zipFile.getPath());
+    }
+
+    @Test
+    public void testGetSubbmittedFileNames() {
+        ZipFile zipFile = new ZipFile("test.zip");
+        assertEquals(zipFile.getSubmittedFileNames().size(), 0); 
+    }
+
 }

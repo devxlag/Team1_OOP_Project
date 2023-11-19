@@ -1,36 +1,32 @@
 package team1project;
 
-// import org.junit.jupiter.api.Test;
-// import static org.junit.jupiter.api.Assertions.*;
-// import org.junit.Before;
-// import org.junit.Test;
-// import static org.junit.Assert.*;
-
-
-import org.junit.Before;
-// import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.time.LocalDateTime;
 
-public class FlightTest{
+/**
+ * This class contains JUnit tests for the Flight class.
+ * It validates the behavior of Flight class attributes and methods.
+ */
+public class FlightTest {
 
-
+    /**
+     * Test for string attributes in the Flight class.
+     */
     @Test
-    @DisplayName("Test String attributes types")
     public void testStringAttributes() {
         assertStringAttribute("flightNo");
         assertStringAttribute("destination");
         assertStringAttribute("origin");
     }
 
+    /**
+     * Helper method to assert characteristics of string attributes.
+     *
+     * @param attributeName The name of the attribute to be tested.
+     */
     private void assertStringAttribute(String attributeName) {
         // Create an instance of the Flight class
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -53,8 +49,78 @@ public class FlightTest{
         }
     }
 
+    /**
+     * Test for luggage manifest attribute in the Flight class.
+     */
     @Test
-    @DisplayName("Test Flight Constructor")
+    public void testLuggageManifestAttribute() {
+        assertLuggageManifestAttribute("manifest");
+    }
+
+    /**
+     * Helper method to assert characteristics of luggage manifest attribute.
+     *
+     * @param attributeName The name of the attribute to be tested.
+     */
+    private void assertLuggageManifestAttribute(String attributeName) {
+        // Create an instance of the Flight class       
+        Flight flight = new Flight("FL123", "New York", "London", LocalDateTime.now());
+
+        // Use reflection to get the field
+        try {
+            Field field = Flight.class.getDeclaredField(attributeName);
+
+            // Assert that the field is of type Passenger
+            assertEquals(LuggageManifest.class, field.getType());
+
+            // Assert that the field is private
+            assertTrue(Modifier.isPrivate(field.getModifiers()));
+
+            // Assert that the field is an instance variable (not static)
+            assertFalse(Modifier.isStatic(field.getModifiers()));
+        } catch (NoSuchFieldException e) {
+            fail(attributeName + " field not found in LuggageSlip class");
+        }
+    }
+
+    /**
+     * Test for flight date attribute in the Flight class.
+     */
+    @Test
+    public void testFlightDateAttribute() {
+        assertLocalDateAttribute("flightDate");
+    }
+
+    /**
+     * Helper method to assert characteristics of flight date attribute.
+     *
+     * @param attributeName The name of the attribute to be tested.
+     */
+    private void assertLocalDateAttribute(String attributeName) {
+        // Create an instance of the Passenger class       
+        Flight flight = new Flight("FL123", "New York", "London", LocalDateTime.now());
+
+        // Use reflection to get the field
+        try {
+            Field field = Flight.class.getDeclaredField(attributeName);
+
+            // Assert that the field is of type Passenger
+            assertEquals(LocalDateTime.class, field.getType());
+
+            // Assert that the field is private
+            assertTrue(Modifier.isPrivate(field.getModifiers()));
+
+            // Assert that the field is an instance variable (not static)
+            assertFalse(Modifier.isStatic(field.getModifiers()));
+        } catch (NoSuchFieldException e) {
+            fail(attributeName + " field not found in LuggageSlip class");
+        }
+    }
+
+    /**
+     * Test for Flight class constructor.
+     */
+    @Test
     public void testFlightConstructor() {
         // Create an instance of the Flight class
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -70,8 +136,10 @@ public class FlightTest{
         assertNotNull(flight.getManifest());
     }
 
+    /**
+     * Test for checkInLuggage method in the Flight class.
+     */
     @Test
-    @DisplayName("Test Check in Luggage methdod")
     public void testCheckInLuggage() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -86,8 +154,10 @@ public class FlightTest{
         assertEquals("Invalid Flight", checkInResult);
     }
 
+    /**
+     * Test for getAllowedLuggage method in the Flight class.
+     */
     @Test
-    @DisplayName("Test Get Allowed Luggage method")
     public void testGetAllowedLuggage() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -99,8 +169,10 @@ public class FlightTest{
         assertEquals(3, allowedLuggage);
     }
 
+    /**
+     * Test for printLuggageManifest method in the Flight class.
+     */
     @Test
-    @DisplayName("Test Print Luggage Manifest method")
     public void testPrintLuggageManifest() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -111,17 +183,17 @@ public class FlightTest{
         assertNotNull(luggageManifest);
     }
 
+    /**
+     * Test for toString method in the Flight class.
+     */
     @Test
-    @DisplayName("Test toString method")
     public void testToString() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
         Flight flight = new Flight("FL123", "New York", "London", flightDate);
 
         // Test toString method
-        String expectedToString = "FL123 DESTINATION: New York ORIGIN: London " + flightDate;
+        String expectedToString = "FL123" + " DESTINATION: " + "New York" + " ORIGIN: " + "London" + " " + flightDate;
         assertEquals(expectedToString, flight.toString());
     }
-
-
 }
