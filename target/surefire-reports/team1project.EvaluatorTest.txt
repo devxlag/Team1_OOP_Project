@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+Test set: team1project.EvaluatorTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 1, Errors: 3, Skipped: 0, Time elapsed: 0.207 s <<< FAILURE! - in team1project.EvaluatorTest
+testWriteJavaFile  Time elapsed: 0.144 s  <<< ERROR!
+java.io.FileNotFoundException: C:\Users\DEVONM~1\AppData\Local\Temp\tempDir431837725419277347211685320066200\TestFile.java (The system cannot find the path specified)
+	at team1project.EvaluatorTest.testWriteJavaFile(EvaluatorTest.java:167)
+
+testProcessSubmissionFile  Time elapsed: 0.003 s  <<< ERROR!
+java.io.FileNotFoundException: C:\Users\DEVONM~1\AppData\Local\Temp\tempDir10795458367589537738211685443330100\TestSubmission.zip (The system cannot find the path specified)
+	at team1project.EvaluatorTest.createTempZipFile(EvaluatorTest.java:205)
+	at team1project.EvaluatorTest.testProcessSubmissionFile(EvaluatorTest.java:26)
+
+testTraverseFiles  Time elapsed: 0.006 s  <<< ERROR!
+java.nio.file.NoSuchFileException: C:\Users\DEVONM~1\AppData\Local\Temp\tempDir9771123043985287212211685448757100\NestedZip1.zip
+	at team1project.EvaluatorTest.createNestedZipFile(EvaluatorTest.java:239)
+	at team1project.EvaluatorTest.testTraverseFiles(EvaluatorTest.java:59)
+
+testRunTests  Time elapsed: 0.04 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at team1project.EvaluatorTest.testRunTests(EvaluatorTest.java:149)
+
