@@ -3,12 +3,15 @@ package team1project;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import org.apache.pdfbox.pdmodel.PDPage;
+
 import org.junit.Before;
 import org.junit.Test;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
+
+
+
+/**
+ * Unit tests for the {@link PDFPrinter} class.
+ */
 
 public class PDFPrinterTest {
     private PDFPrinter pdfPrinter;
@@ -19,7 +22,9 @@ public class PDFPrinterTest {
         pdfPrinter = new PDFPrinter();
     }
 
- 
+  /**
+     * Tests the {@link PDFPrinter#createNewDocument()} method.
+     */
     @Test
     public void testCreateNewDocument() 
     {
@@ -28,7 +33,9 @@ public class PDFPrinterTest {
     }
 
     
-    
+    /**
+     * Tests the {@link PDFPrinter#createNewPage()} method.
+     */
 
     @Test
     public void testCreateNewPage()
@@ -38,6 +45,9 @@ public class PDFPrinterTest {
         assertNotNull(pdfPrinter.getCurrentPage());
     }
 
+    /**
+     * Tests the {@link PDFPrinter#addBasicContent(String[])} method.
+     */
     @Test
     public void testAddBasicContent() 
     {
@@ -54,6 +64,10 @@ public class PDFPrinterTest {
         assertTrue("Generated content should contain 'Line 3'", generatedContent.contains("Line 3"));
     }
 
+
+      /**
+     * Tests the {@link PDFPrinter#addContentToStream(String)} method.
+     */
     @Test
     public void testAddContentToStream() 
     {
@@ -71,7 +85,9 @@ public class PDFPrinterTest {
 
     }
 
-    
+    /**
+     * Tests the {@link PDFPrinter#saveAndClose(String)} method.
+     */
     @Test
     public void testSaveAndClose() {
         pdfPrinter.createNewDocument();
@@ -86,6 +102,9 @@ public class PDFPrinterTest {
       
     }
     
+     /**
+     * Tests the {@link PDFPrinter#getGeneratedContent()} method.
+     */
     
     @Test
     public void testGetGeneratedContent() 

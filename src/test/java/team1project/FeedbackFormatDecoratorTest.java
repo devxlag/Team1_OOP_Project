@@ -5,17 +5,37 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Test class for {@link FeedbackFormatDecorator}.
+ * This class contains test cases for the update method of the FeedbackFormatDecorator class.
+ * It utilizes mock data to simulate a submission with test results and checks if the
+ * generated PDF content contains the expected information.
+ *
+ * @see FeedbackFormatDecorator
+ * @see Evaluator
+ * @see Submission
+ * @see TestResult
+ */
 public class FeedbackFormatDecoratorTest {
 
     private FeedbackFormatDecorator feedbackDecorator;
     private Evaluator evaluator;
 
+     /**
+     * Sets up the test environment by initializing the FeedbackFormatDecorator
+     * and the evaluator before each test case.
+     */
     @Before
     public void setUp() {
         feedbackDecorator = new FeedbackFormatDecorator();
         evaluator = new Evaluator(); 
     }
 
+    /**
+     * Test case for the update method of FeedbackFormatDecorator.
+     * Creates a mock submission, sets it in the evaluator, adds mock test results,
+     * and checks if the update method generates the expected PDF content.
+     */
     @Test
     public void testFeedbackFormatDecoratorUpdate() {
         // Create a submission and set it in the evaluator
@@ -53,8 +73,14 @@ public class FeedbackFormatDecoratorTest {
         assertTrue(pdfContent.contains("Luggage Manifest Class Tests:"));
     }
 
-    // Helper method to create a mock submission 
-    private Submission createMockSubmission() {
+   
+    /**
+     * Helper method to create a mock submission for testing purposes.
+     *
+     * @return A mock Submission object.
+     */
+    private Submission createMockSubmission()
+     {
         Submission submission = new Submission();
         submission.setStudentID("123");
         submission.setStudentName("John Doe");
@@ -66,11 +92,23 @@ public class FeedbackFormatDecoratorTest {
         submission.setFlightClassScore(20);
         submission.setLuggageSlipClassScore(14);
         submission.setLuggageManifestClassScore(30);
+        
         return submission;
     }
 
-    // Helper method to create a mock TestResult
-    private TestResult createMockTestResult(String className, String methodName, String status, int score, String feedback) {
+   /**
+     * Helper method to create a mock TestResult for testing purposes.
+     *
+     * @param className The class name of the test.
+     * @param methodName The method name of the test.
+     * @param status The status of the test (PASSED/FAILED).
+     * @param score The score achieved in the test.
+     * @param feedback The feedback provided for the test.
+     * @return A mock TestResult object.
+     */
+
+    private TestResult createMockTestResult(String className, String methodName, String status, int score, String feedback)
+     {
         TestResult testResult = new TestResult();
         testResult.setClassName(className);
         testResult.setMethodName(methodName);

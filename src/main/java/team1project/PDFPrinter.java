@@ -9,6 +9,10 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import java.io.IOException;
 import java.io.StringWriter;
 
+/**
+ * Utility class for creating and managing PDF documents.
+ * Provides methods to create, modify, and extract content from PDFs.
+ */
 
 
 public class PDFPrinter {
@@ -17,13 +21,18 @@ public class PDFPrinter {
     private PDPageContentStream currentContentStream;
     private static int filenum = 1;
 
-    public PDFPrinter() {
-        //document = new PDDocument();
-    }
+ 
+      /**
+     * Creates a new PDF document.
+     */
 
     public void createNewDocument() {
         document = new PDDocument();
     }
+    
+     /**
+     * Creates a new page within the PDF document.
+     */
 
     public void createNewPage() {
         currentPage = new PDPage();
@@ -36,14 +45,31 @@ public class PDFPrinter {
          
         }
     }
+
+     /**
+     * Gets the current page of the PDF document.
+     * @return The current page.
+     */
+
     public PDPage getCurrentPage()
     {
         return currentPage;
     }
+
+
+     /**
+     * Gets the current content stream of the PDF document.
+     * @return The current content stream.
+     */
     public PDPageContentStream getCurrentContentStream()
     {
         return currentContentStream;
     }
+
+     /**
+     * Adds basic content to the PDF document.
+     * @param lines The lines of content to add.
+     */
     public void addBasicContent(String[] lines) {
         try {
             float margin = 50;
@@ -68,6 +94,11 @@ public class PDFPrinter {
         }
     }
 
+    /**
+     * Adds additional content to the PDF document.
+     * @param additionalContent The additional content to add.
+     */
+
     public void addContentToStream(String additionalContent) {
         try {
             float margin = 50;
@@ -91,6 +122,10 @@ public class PDFPrinter {
             
         }
     }
+
+     /**
+     * Closes the current content stream of the PDF document.
+     */
     public void closeContentStream() {
         try {
             if (currentContentStream != null) {
@@ -102,6 +137,12 @@ public class PDFPrinter {
            
         }
     }
+    
+
+     /**
+     * Saves and closes the PDF document.
+     * @param savePath The path where the PDF document should be saved.
+     */
     
     public void saveAndClose(String savePath) {
         try {
@@ -116,6 +157,10 @@ public class PDFPrinter {
         }
     }
 
+    /**
+     * Closes the PDF document.
+     * Called internally when saving and closing.
+     */
     private void closeDocument() {
         if (document != null) {
             try {
@@ -127,10 +172,17 @@ public class PDFPrinter {
         }
     }
    
+     /**
+     * Gets the generated content of the PDF document.
+     * @return The generated content.
+     * @throws IllegalStateException If the PDF document is not created.
+     */
 
-    public String getGeneratedContent() {
+    public String getGeneratedContent() 
+    {
         // Check if the document is null
-        if (document == null) {
+        if (document == null) 
+        {
             throw new IllegalStateException("PDF document is not created.");
         }
 
