@@ -1,6 +1,8 @@
 package team1project;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * The Submission class represents a student's submission in a programming project evaluation.
@@ -11,6 +13,7 @@ public class Submission {
 
     private String studentName;
     private String studentID;
+    private String assignmentNo;
     private int passengerClassScore = 0;
     private int flightClassScore = 0;
     private int luggageSlipClassScore = 0;
@@ -22,6 +25,9 @@ public class Submission {
     private ArrayList<String> missingFiles;
     private ArrayList<TestResult> results;
     private String submissionPath;
+    private boolean isCompiled = false;
+    private HashMap<String, Double> cleanCodeScoreMap;
+    private int totalCleanCodeScore = 0;
 
     /**
      * Default constructor for the Submission class.
@@ -31,6 +37,11 @@ public class Submission {
         filesSubmitted = new ArrayList<>();
         missingFiles = new ArrayList<>();
         results = new ArrayList<>();
+        cleanCodeScoreMap = new HashMap<String, Double>();
+    }
+
+    public boolean isSubmissionInitialized(){
+        return (studentName != null && studentID != null && assignmentNo != null);
     }
 
     /**
@@ -49,6 +60,15 @@ public class Submission {
      */
     public String getStudentID() {
         return studentID;
+    }
+
+    /**
+     * Gets the assignment number.
+     *
+     * @return The assignment number.
+     */
+    public String getAssignmentNo() {
+        return assignmentNo;
     }
 
     /**
@@ -124,6 +144,24 @@ public class Submission {
     }
 
     /**
+     * Gets the compilation status.
+     *
+     * @return True if the submission is compiled, false otherwise.
+     */
+    public boolean isCompiled() {
+        return isCompiled;
+    }
+
+    /**
+     * Sets the compilation status.
+     *
+     * @param compiled The compilation status to set.
+     */
+    public void setCompiled(boolean compiled) {
+        isCompiled = compiled;
+    }
+
+    /**
      * Sets the score for the Passenger class.
      *
      * @param passengerClassScore The Passenger class score to set.
@@ -187,6 +225,42 @@ public class Submission {
     }
 
     /**
+     * Gets the score for the Clean Code Checker.
+     *
+     * @return The Clean Code Checker score.
+     */
+    public HashMap<String, Double> getCleanCodeScoreMap() {
+        return cleanCodeScoreMap;
+    }
+
+    /**
+     * Sets the score for the Clean Code Checker.
+     *
+     * @param cleanCodeScoreMap The Clean Code Checker score to set.
+     */
+    public void setCleanCodeScoreMap(HashMap<String, Double> cleanCodeScoreMap) {
+        this.cleanCodeScoreMap = cleanCodeScoreMap;
+    }
+
+    /**
+     * Gets the total score for the Clean Code Checker.
+     *
+     * @return The total Clean Code Checker score.
+     */
+    public int getTotalCleanCodeScore() {
+        return totalCleanCodeScore;
+    }
+
+    /**
+     * Sets the total score for the Clean Code Checker.
+     *
+     * @param totalCleanCodeScore The total Clean Code Checker score to set.
+     */
+    public void setTotalCleanCodeScore(int totalCleanCodeScore) {
+        this.totalCleanCodeScore = totalCleanCodeScore;
+    }
+
+    /**
      * Sets the total score for the submission.
      *
      * @param score The total score to set.
@@ -225,12 +299,40 @@ public class Submission {
     }
 
     /**
+     * Sets the assignment number.
+     *
+     * @param assignmentNo The assignment number to set.
+     */
+
+    public void setAssignmentNo(String assignmentNo) {
+        this.assignmentNo = assignmentNo;
+    }
+
+    /**
      * Adds a file to the list of files submitted.
      *
      * @param fileName The name of the file to add.
      */
     public void addFileSubmitted(String fileName) {
         filesSubmitted.add(fileName);
+    }
+
+    /**
+     * Sets the list of files submitted.
+     *
+     * @param filesSubmitted The list of files submitted to set.
+     */
+    public void setFilesSubmitted(ArrayList<String> filesSubmitted) {
+        this.filesSubmitted = filesSubmitted;
+    }
+
+    /**
+     * Sets the list of missing files.
+     *
+     * @param missingFiles The list of missing files to set.
+     */
+    public void setMissingFiles(ArrayList<String> missingFiles) {
+        this.missingFiles = missingFiles;
     }
 
     /**

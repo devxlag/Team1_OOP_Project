@@ -11,11 +11,20 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * The DummyJavaFileGeneratorTest class contains unit tests for the DummyJavaFileGenerator class.
+ */
 public class DummyJavaFileGeneratorTest {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
+    /**
+     * Tests the generateFiles method of DummyJavaFileGenerator by creating a temporary input file,
+     * setting up an output directory, calling the method, and verifying the generated file.
+     *
+     * @throws IOException If an I/O error occurs during the test.
+     */
     @Test
     public void testGenerateFiles() throws IOException {
         // Create a temporary input file with sample class information

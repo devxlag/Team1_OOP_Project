@@ -3,7 +3,9 @@ package team1project;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class ScoreCalculator implements EvaluatorObserver {
@@ -12,10 +14,12 @@ public class ScoreCalculator implements EvaluatorObserver {
     private HashMap <String, Integer> scoreScheme;
     ArrayList<String> classNames;
     private static String mainDirectory = "src/main/java/team1project";
+    private static ArrayList<String> requiredFiles;
 
-    public ScoreCalculator() {
+    public ScoreCalculator(ArrayList<String> requiredFiles) {
        scoreScheme = new HashMap<String, Integer>();
        populateScoreScheme();
+        this.requiredFiles = requiredFiles;
 
     }
 
@@ -27,9 +31,7 @@ public class ScoreCalculator implements EvaluatorObserver {
         boolean done1 = false, done2 = false;
 
         // read in test data from file to populate hashmap   
-        
-        submission.setCompileScore(5);
-        
+                    
        for(TestResult testResult : testResults){
 
            if (scoreScheme.containsKey(testResult.getMethodName())){
@@ -59,22 +61,104 @@ public class ScoreCalculator implements EvaluatorObserver {
             done2 = true;            
         }
 
-        int score = 0;
-        if (done1 && done2) {
-            for(TestResult testResult : submission.getResults()){
-                score += testResult.getScore();             
-            }           
+        if(calculateCleanCodeScore(submission)){
+            System.out.println("Clean code score calculated successfully.");
+            done2 = true;
         }
+        else{
+            System.out.println("Clean code score calculation failed.");
+            done2 = false;
+        }
+
+        determineCompileScore(submission);
+
+        int totalScore = 0;       
+
+        totalScore += submission.getCompileScore();
+        totalScore += submission.getPassengerClassScore();
+        totalScore += submission.getFlightClassScore();
+        totalScore += submission.getLuggageManifestClassScore();
+        totalScore += submission.getLuggageSlipClassScore();
+        totalScore += submission.getTotalCleanCodeScore();   
                        
-        if(submission.setTotalScore(score))
+        if(submission.setTotalScore(totalScore))
             return true;
         
         return false;
                                       
     }
 
+    private void determineCompileScore(Submission submission){
+        if (containsAll(submission.getFilesSubmitted(), requiredFiles.toArray(new String[0]))) {
+            System.out.println("All required files found.");            
+            setCompiledScore(submission, 5);
+            
+        } else {
 
-    public void populateScoreScheme(){
+                System.out.println("Missing required files:");
+                for (String file : requiredFiles) {
+                    if (!submission.getFilesSubmitted().contains(file)) {
+                        submission.addMissingFile(file);
+                        System.out.println(file);
+                    }
+                }
+            // Check for specific conditions
+            if (containsAll(submission.getFilesSubmitted(), "Passenger.java", "Flight.java", "LuggageSlip.java", "LuggageManifest.java")) {
+                ArrayList<String> filesToRun = new ArrayList<>(Arrays.asList("Passenger.java", "Flight.java", "LuggageSlip.java", "LuggageManifest.java"));
+                setCompiledScore(submission, 4);
+                
+            } else if (submission.getFilesSubmitted().contains("Passenger.java")
+                    && containsAny(submission.getFilesSubmitted(), "Flight.java", "LuggageSlip.java", "LuggageManifest.java", "LuggageManagmentSystem.java")) {
+                    setCompiledScore(submission, 1);
+                
+            } 
+        }       
+    }
+
+    private boolean containsAll(List<String> list, String... elements) {
+        return list.containsAll(Arrays.asList(elements));
+    }
+
+    private boolean containsAny(List<String> list, String... elements) {
+        for (String element : elements) {
+            if (list.contains(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void setCompiledScore(Submission submission, int score) {
+        if(submission.isCompiled()){
+                System.out.println("All required files found.");
+                submission.setCompileScore(score);
+            }
+            else{
+                System.out.println("All required files found but did not compile.");
+                submission.setCompileScore(0);
+            }
+    }
+
+    private boolean calculateCleanCodeScore(Submission submission){
+        int sc = 0;
+        for(Double score : submission.getCleanCodeScoreMap().values()){
+            sc += score;                       
+        }
+        int cleanCodeScoreAvg = sc / submission.getCleanCodeScoreMap().size();
+        
+        submission.setTotalCleanCodeScore(cleanCodeScoreAvg);
+        if(submission.getTotalCleanCodeScore() > 0){
+
+            return true;
+
+        }
+        else{
+            return false;
+        }
+    }
+
+
+    private void populateScoreScheme(){
 
          try {
             File myObj = new File(mainDirectory + "/utilityFiles/testscores.txt");

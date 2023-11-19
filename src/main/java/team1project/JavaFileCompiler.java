@@ -93,7 +93,7 @@ public class JavaFileCompiler {
             if (files != null) {
                 for (File file : files) {
                     if (!file.isDirectory() && file.getName().endsWith(".class") && filesToDelete.contains(file.getName())) {
-                        System.out.println("Deleting file: " + file.getName());
+                        // System.out.println("Deleting file: " + file.getName());
                         file.delete();
                     }
                 }

@@ -1,27 +1,30 @@
 package team1project;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.TemporaryFolder;
-
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * The ZipSubmissionProcessorTest class contains unit tests for the ZipSubmissionProcessor class.
+ * Other methods are tested indirectly.
+ */
 public class ZipSubmissionProcessorTest {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
-     @Test
+    /**
+     * Tests the update method of the ZipSubmissionProcessor class.
+     * Verifies that the submission is processed successfully, and the composite tree root is set.
+     */
+    @Test
     void testUpdate() throws IOException {
         // Create a temporary directory for testing
         File tempDir = Files.createTempDirectory("tempTestDir").toFile();
@@ -53,20 +56,25 @@ public class ZipSubmissionProcessorTest {
 
             // Verify that the composite tree root is set in the evaluator
             assertNotNull(evaluator.getCompositeTreeRoot());
-            if(evaluator.getCompositeTreeRoot() instanceof ZipFile){
+            if (evaluator.getCompositeTreeRoot() instanceof ZipFile) {
                 ZipFile compositeTreeRoot = (ZipFile) evaluator.getCompositeTreeRoot();
                 assertEquals(2, compositeTreeRoot.getChildren().size());
             }
-            // Verify that the nested zip files are added as components
-            
-
         } finally {
             // Cleanup: Delete the temporary directory
             deleteDirectory(tempDir);
         }
     }
 
-
+    /**
+     * Creates a nested zip file with a Java file inside.
+     *
+     * @param parentDir    The parent directory for the nested zip file.
+     * @param zipFileName  The name of the nested zip file.
+     * @param javaFileName The name of the Java file inside the nested zip file.
+     * @return The created nested zip file.
+     * @throws IOException If an I/O error occurs.
+     */
     private File createNestedZipFile(File parentDir, String zipFileName, String javaFileName) throws IOException {
         File nestedZipFile = new File(parentDir, zipFileName);
 
@@ -80,6 +88,14 @@ public class ZipSubmissionProcessorTest {
         return nestedZipFile;
     }
 
+    /**
+     * Creates a main zip file containing the provided nested zip files.
+     *
+     * @param parentDir       The parent directory for the main zip file.
+     * @param nestedZipFiles  The nested zip files to include in the main zip file.
+     * @return The created main zip file.
+     * @throws IOException If an I/O error occurs.
+     */
     private File createMainZipFile(File parentDir, File... nestedZipFiles) throws IOException {
         File mainZipFile = new File(parentDir, "MainZipFile.zip");
 
@@ -95,6 +111,11 @@ public class ZipSubmissionProcessorTest {
         return mainZipFile;
     }
 
+    /**
+     * Recursively deletes a directory and its contents.
+     *
+     * @param directory The directory to delete.
+     */
     private void deleteDirectory(File directory) {
         if (directory.exists()) {
             File[] files = directory.listFiles();
@@ -111,4 +132,3 @@ public class ZipSubmissionProcessorTest {
         }
     }
 }
-

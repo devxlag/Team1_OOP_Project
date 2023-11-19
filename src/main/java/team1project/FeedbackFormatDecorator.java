@@ -32,91 +32,96 @@ private String feedbackContent;
     public boolean update(Evaluator evaluator) {
         try{
             
-         // Extract submission details from the evaluator 
-        Submission submission = evaluator.getSubmission();
-                 
-        getPDFManager().createNewDocument();
-        
-        // Generate basic content about the student's submission
-        String basicContent = "Student ID: " + submission.getStudentID() + "\n" + "Student Name: " + submission.getStudentName() + "\n" + "Files Submitted: " + submission.getFilesSubmitted() + "\n" + "Missing Files: " + submission.getMissingFiles() + "\n" + "Overall Score: " + submission.getTotalScore();
-        
-        
-         // Generate class-wise scores
-        String passengerScore = "Passenger Class Score: " + submission.getPassengerClassScore() + "/16" + "\n";
-        String flightScore = "Flight Class Score: " + submission.getFlightClassScore()  + "/16"+ "\n";
-        String luggageSlipScore = "Luggage Slip Class Score: " + submission.getLuggageSlipClassScore()  + "/14"+ "\n";
-        String luggageManifestScore = "Luggage Manifest Class Score: " + submission.getLuggageManifestClassScore()  + "/20"+ "\n";
-        String classScores = "\n" + passengerScore +  "\n" + flightScore +  "\n" +luggageSlipScore + "\n" + luggageManifestScore;
+            // Extract submission details from the evaluator 
+            Submission submission = evaluator.getSubmission();
+                    
+            getPDFManager().createNewDocument();
+            
+            // Generate basic content about the student's submission
+            String basicContent = "Student ID: " + submission.getStudentID() + "\n" + "Student Name: " + submission.getStudentName() + "\n" + "Assignment: " + submission.getAssignmentNo() +"\n" + "Files Submitted: " + submission.getFilesSubmitted() + "\n" + "Missing Files: " + submission.getMissingFiles() + "\n" + "Overall Score: " + submission.getTotalScore();
+            
+            
+            // Generate class-wise scores
+            String passengerScore = "Passenger Class Score: " + submission.getPassengerClassScore() + "/16" + "\n";
+            String flightScore = "Flight Class Score: " + submission.getFlightClassScore()  + "/16"+ "\n";
+            String luggageSlipScore = "Luggage Slip Class Score: " + submission.getLuggageSlipClassScore()  + "/14"+ "\n";
+            String luggageManifestScore = "Luggage Manifest Class Score: " + submission.getLuggageManifestClassScore()  + "/20"+ "\n";
+            String compileScore = "Compile Score: " + submission.getCompileScore()  + "/5"+ "\n";
+            String cleanCodeScore = "Clean Code Score: " + submission.getTotalCleanCodeScore()  + "/5"+ "\n";
+            String classScores = "\n" + passengerScore +  "\n" + flightScore +  "\n" +luggageSlipScore + "\n" + luggageManifestScore + "\n" + compileScore + "\n" + cleanCodeScore;
 
-        basicContent += "\n" + classScores;
+            basicContent += "\n" + classScores;
 
-        // Generate corrective feedback and test case feedback
-        String correctiveFeedback = " Corrective Feedback: \n";
-        String testCaseFeedBack = " Test Cases Feedback: \n";
-        String correctiveFeed = "";
-        String fTestFeed = "";
-        String lTestFeed = "";
-        String pTestFeed = "";
-        String mTestFeed = "";
+            // Generate corrective feedback and test case feedback
+            String correctiveFeedback = " Corrective Feedback: \n";
+            String testCaseFeedBack = " Test Cases Feedback: \n";
+            String correctiveFeed = "";
+            String fTestFeed = "";
+            String lTestFeed = "";
+            String pTestFeed = "";
+            String mTestFeed = "";
 
-         // Iterate over test results to gather feedback
-        for(TestResult tr : submission.getResults())
-        {
-            if(tr.getStatus().equals("FAILED"))
+            // Iterate over test results to gather feedback
+            for(TestResult tr : submission.getResults())
             {
-                correctiveFeed = "  " + tr.getTestName() + " " + "\n  Comment: " + tr.getFeedback() + "\n";
-                correctiveFeedback += "\n" + correctiveFeed;
+                if(tr.getStatus().equals("FAILED"))
+                {
+                    correctiveFeed = "  " + tr.getTestName() + " " + "\n  Comment: " + tr.getFeedback() + "\n";
+                    correctiveFeedback += "\n" + correctiveFeed;
+                }
+
+                // Group test feedback by class name
+                if (tr.getClassName().contains("PassengerTest")){
+                    pTestFeed += "\n  " + getTestInfo(tr);
+                } else if(tr.getClassName().contains("FlightTest")){
+                    fTestFeed += "\n  " + getTestInfo(tr);
+                } else if(tr.getClassName().contains("LuggageSlipTest")){
+                    lTestFeed += "\n  " + getTestInfo(tr);
+                } else if(tr.getClassName().contains("LuggageManifestTest")){
+                    mTestFeed += "\n  " + getTestInfo(tr);
+                }                                                           
             }
 
-            // Group test feedback by class name
-            if (tr.getClassName().contains("PassengerTest")){
-                pTestFeed += "\n  " + getTestInfo(tr);
-            } else if(tr.getClassName().contains("FlightTest")){
-                fTestFeed += "\n  " + getTestInfo(tr);
-            } else if(tr.getClassName().contains("LuggageSlipTest")){
-                lTestFeed += "\n  " + getTestInfo(tr);
-            } else if(tr.getClassName().contains("LuggageManifestTest")){
-                mTestFeed += "\n  " + getTestInfo(tr);
-            }                                                           
-        }
+            // Include a message if no corrective feedback is given
 
-         // Include a message if no corrective feedback is given
-
-        if(correctiveFeed.equals(""))
-        {
-            correctiveFeedback += "\n  No corrective feedback to give. You passed all the tests!";
-        }
+            if(correctiveFeed.equals("") && !submission.getResults().isEmpty())
+            {
+                correctiveFeedback += "\n  No corrective feedback to give. You passed all the tests!";
+            }
+            else{
+                correctiveFeedback += "\n  No corrective feedback to give. You did not adhere to the requirements of the assignment or your files failed to compile.";
+            }
 
 
-         // Concatenate test case feedback for different class types
-        testCaseFeedBack += "\n" + "\n Passenger Class Tests:\n  " + pTestFeed + "\n\n Flight Class Tests:\n  " + fTestFeed + "\n\n Luggage Slip Class Tests:\n  " +  lTestFeed + "\n\n Luggage Manifest Class Tests:\n  " + mTestFeed;
+            // Concatenate test case feedback for different class types
+            testCaseFeedBack += "\n" + "\n Passenger Class Tests:\n  " + pTestFeed + "\n\n Flight Class Tests:\n  " + fTestFeed + "\n\n Luggage Slip Class Tests:\n  " +  lTestFeed + "\n\n Luggage Manifest Class Tests:\n  " + mTestFeed;
 
-        // Add content to the PDF document and close content streams
-        getPDFManager().createNewPage();
-        getPDFManager().addContentToStream(basicContent);
-        getPDFManager().closeContentStream();
-        
-        getPDFManager().createNewPage();
-        getPDFManager().addContentToStream(testCaseFeedBack);
-        getPDFManager().closeContentStream();
+            // Add content to the PDF document and close content streams
+            getPDFManager().createNewPage();
+            getPDFManager().addContentToStream(basicContent);
+            getPDFManager().closeContentStream();
+            
+            getPDFManager().createNewPage();
+            getPDFManager().addContentToStream(testCaseFeedBack);
+            getPDFManager().closeContentStream();
 
-        getPDFManager().createNewPage();
-        getPDFManager().addContentToStream( correctiveFeedback);
-        getPDFManager().closeContentStream();
-        
-        //Get feedback stored in pdf
-        feedbackContent=getPDFManager().getGeneratedContent();
+            getPDFManager().createNewPage();
+            getPDFManager().addContentToStream( correctiveFeedback);
+            getPDFManager().closeContentStream();
+            
+            //Get feedback stored in pdf
+            feedbackContent=getPDFManager().getGeneratedContent();
 
-        // Call the superclass update method
-        super.update(evaluator);
+            // Call the superclass update method
+            super.update(evaluator);
 
         
         
-        return true;
-    }catch (Exception e) {
-            e.printStackTrace();
-            return false; 
-        }
+            return true;
+        }catch (Exception e) {
+                e.printStackTrace();
+                return false; 
+            }
     }
 
     
@@ -129,7 +134,7 @@ private String feedbackContent;
      */
     private static String getTestInfo(TestResult tr) 
     {
-        return tr.getTestName() + " " + tr.getStatus() + " " + tr.getScore() + " Error: " + tr.getErrorMessage();
+        return tr.getMethodName() + " " + tr.getStatus() + " " + tr.getScore() + " Error: " + tr.getErrorMessage();
     }
 
 

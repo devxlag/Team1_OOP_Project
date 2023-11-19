@@ -30,9 +30,9 @@ public class TestRunner {
      * @param submission The submission for which tests are run.
      * @return True if the tests are run successfully, false otherwise.
      */
-    public boolean runTests(Submission submission) {
+    public void runTests(Submission submission, Class<?>[] testClasses) {
         setTestRunnerCalled(true);
-
+        
         // Create a JUnitCore instance and add a custom RunListener to collect test results
         JUnitCore junit = new JUnitCore();
         TestResultListener listener = new TestResultListener();
@@ -40,12 +40,11 @@ public class TestRunner {
 
         System.out.println("Running tests... for " + submission.getStudentID());
 
-        Result result = junit.run(FlightTest.class, PassengerTest.class, LuggageManifestTest.class, LuggageSlipTest.class);//LuggageManagementSystemTest.class);
+        Result result = junit.run(testClasses);
 
         ArrayList<TestResult> finalResults = listener.getTestResults();
         System.out.println("Number of tests found: " + finalResults.size());
-        submission.setResults(finalResults);
-        return true;
+        submission.setResults(finalResults);        
     }
 
     /**

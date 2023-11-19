@@ -4,8 +4,14 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
+/**
+ * The TestResultTest class contains unit tests for the TestResult class.
+ */
 public class TestResultTest {
 
+    /**
+     * Tests the set and get methods for the class name in the TestResult class.
+     */
     @Test
     public void testSetAndGetClassName() {
         TestResult testResult = new TestResult();
@@ -15,6 +21,9 @@ public class TestResultTest {
         assertEquals("TestClass", testResult.getClassName());
     }
 
+    /**
+     * Tests the set and get methods for the method name in the TestResult class.
+     */
     @Test
     public void testSetAndGetMethodName() {
         TestResult testResult = new TestResult();
@@ -24,6 +33,9 @@ public class TestResultTest {
         assertEquals("testMethod", testResult.getMethodName());
     }
 
+    /**
+     * Tests the set and get methods for the status in the TestResult class.
+     */
     @Test
     public void testSetAndGetStatus() {
         TestResult testResult = new TestResult();
@@ -36,6 +48,9 @@ public class TestResultTest {
         assertEquals("FAIL", testResult.getStatus());
     }
 
+    /**
+     * Tests the set and get methods for the error message in the TestResult class.
+     */
     @Test
     public void testSetAndGetErrorMessage() {
         TestResult testResult = new TestResult();
@@ -45,6 +60,9 @@ public class TestResultTest {
         assertEquals("Error occurred", testResult.getErrorMessage());
     }
 
+    /**
+     * Tests the set and get methods for the score in the TestResult class.
+     */
     @Test
     public void testSetAndGetScore() {
         TestResult testResult = new TestResult();
@@ -54,6 +72,10 @@ public class TestResultTest {
         assertEquals(85, testResult.getScore());
     }
 
+    /**
+     * Tests the toString method in the TestResult class.
+     * Verifies that the method returns the expected string representation of the TestResult object.
+     */
     @Test
     public void testToString() {
         TestResult testResult = new TestResult();
@@ -61,7 +83,7 @@ public class TestResultTest {
         testResult.setClassName("TestClass");
         testResult.setMethodName("testMethod");
         testResult.setStatus("FAIL");
-        testResult.setErrorMessage("Error occured");
+        testResult.setErrorMessage("Error occurred");
         testResult.setScore(0);
         testResult.setFeedback(" ");
 
@@ -70,7 +92,7 @@ public class TestResultTest {
                                     ", className='" + "TestClass" + '\'' +
                                     ", methodName='" + "testMethod" + '\'' +
                                     ", status='" + "FAIL" + '\'' +
-                                    ", errorMessage='" + "Error occured"+ '\'' +
+                                    ", errorMessage='" + "Error occurred" + '\'' +
                                     ", score=" + "0" +
                                     ", feedback='" + " " + '\'' +
                                     '}';
@@ -78,6 +100,9 @@ public class TestResultTest {
         assertEquals(expectedToString, testResult.toString());
     }
 
+    /**
+     * Tests the set and get methods for the test name in the TestResult class.
+     */
     @Test
     public void testSetAndGetTestName() {
         TestResult testResult = new TestResult();
@@ -87,3 +112,4 @@ public class TestResultTest {
         assertEquals("SampleTest", testResult.getTestName());
     }
 }
+
