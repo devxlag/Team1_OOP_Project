@@ -79,6 +79,6 @@ public class FeedbackFormatDecorator extends PDFBaseDecorator{
     
     // Define a method to retrieve common information for each test
     private static String getTestInfo(TestResult tr) {
-        return tr.getTestName() + " " + tr.getStatus() + " " + tr.getScore() + " Error: " + tr.getErrorMessage();
+        return tr.getMethodName() + " " + tr.getStatus() + " " + tr.getScore() + " Error: " + tr.getErrorMessage();
     }
 }

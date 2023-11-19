@@ -13,14 +13,16 @@ public class Evaluator implements EvaluatorSubject{
 
     private ZipFile compositeTreeRoot; // Root of the composite tree
     private File zipFile;
-    private DummyJavaFileGenerator dummyJavaFileGenerator = new DummyJavaFileGenerator();   
+    private DummyJavaFileGenerator dummyJavaFileGenerator;   
     private EvaluatorObserver zipObserver;
     private EvaluatorObserver scoreObserver;
     private EvaluatorObserver feedbackObserver;
     private EvaluatorObserver pdfObserver;
     private Submission submission;
     private static String mainDirectory = "src/main/java/team1project";
-    private ArrayList<String> requiredFiles;
+    private ArrayList<String> requiredFiles; 
+    private JavaFileCompiler javaFileCompiler;
+    private TestRunner testRunner;  
 
     public Evaluator() {       
         requiredFiles = new ArrayList<>();
@@ -28,7 +30,12 @@ public class Evaluator implements EvaluatorSubject{
         requiredFiles.add("Flight.java");
         requiredFiles.add("LuggageSlip.java");
         requiredFiles.add("LuggageManifest.java");
-        requiredFiles.add("LuggageManagmentSystem.java");  
+        requiredFiles.add("LuggageManagmentSystem.java"); 
+
+        javaFileCompiler = new JavaFileCompiler();
+        testRunner = new TestRunner();
+        dummyJavaFileGenerator = new DummyJavaFileGenerator();
+
     }
 
     public void registerObservers(){
@@ -51,6 +58,11 @@ public class Evaluator implements EvaluatorSubject{
         return zipFile;
     }
 
+    public void setZipFile(File zipFile) {
+        this.zipFile = zipFile;
+        notifyObservers(zipObserver);
+    }
+
     private void setSubmission(){
         this.submission = null;
         this.submission = new Submission();
@@ -60,6 +72,31 @@ public class Evaluator implements EvaluatorSubject{
         return submission;
     }
 
+    public JavaFileCompiler getJavaFileCompiler(){
+        return javaFileCompiler;
+    }
+
+    public TestRunner getTestRunner(){
+        return testRunner;
+    }
+
+    public DummyJavaFileGenerator getDummyJavaFileGenerator(){
+        return dummyJavaFileGenerator;
+    }
+
+    public void setDummyJavaFileGenerator(DummyJavaFileGenerator dummyJavaFileGenerator){
+        this.dummyJavaFileGenerator = dummyJavaFileGenerator;
+    }
+
+    public void setJavaFileCompiler(JavaFileCompiler javaFileCompiler){
+        this.javaFileCompiler = javaFileCompiler;
+    }
+
+    public void setTestRunner(TestRunner testRunner){
+        this.testRunner = testRunner;
+    }
+
+
     
     public void processSubmissionFile(File zipFile) throws IOException { 
         
@@ -67,10 +104,13 @@ public class Evaluator implements EvaluatorSubject{
         //test with mock data 
 
         if(zipFile != null){
-            this.zipFile = zipFile;
-            notifyObservers(zipObserver);
+            setZipFile(zipFile);
             if(compositeTreeRoot!=null){
-                evaluate();
+                if(evaluate()){
+                    System.out.println("Submissions evaluated.");                
+                }else{
+                    System.out.println("Submissions not evaluated.");                
+                }
             }
             else{
                 System.out.println("Zip File not processed.");
@@ -94,7 +134,7 @@ public class Evaluator implements EvaluatorSubject{
         return false;
     }
 
-    private boolean traverseFiles(List<AbstractFile> children, File directory) throws IOException {
+    public boolean traverseFiles(List<AbstractFile> children, File directory) throws IOException {
 
         String studentID = "";
         boolean compelted = false;
@@ -102,40 +142,37 @@ public class Evaluator implements EvaluatorSubject{
         for(AbstractFile node : children) {
             if(node instanceof ZipFile) {
                 ZipFile zipFile = (ZipFile) node;
+
                 setSubmission();
                 getSubmission().setSubmissionPath(zipFile.getPath());
                 studentID = extractIdFromFileName(zipFile.getFileName());
+                getSubmission().setStudentID(studentID);
                 boolean written = false;
                
                 System.out.print("\nWriting Java files to temp directory: for Student ID: " + studentID);
                 
-                for(AbstractFile child : zipFile.getChildren()) {
-                   // child.display();
+            
+                reset();
+
+                for(AbstractFile child : zipFile.getChildren()) {                
                     written = writeJavaFile(child, directory); 
                 }
+
                 if(written){
-                    System.out.println("\n Java files written to temp directory.");
-                    
-                    submission.setStudentID(studentID);
-                    System.out.println("Running Test for: " + submission.getStudentID());
-                    try {
-                     runTest();
-                        
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    //reset();
-                    System.out.println("Temp Java files reset.");
-                    
+                    runTests();
+                    reset();
+                    compelted = true;
                 }
-                compelted = true; 
-            }                                  
-        }         
+
+            }
+                                
+        }
         if(compelted)
             return true;
         return false;
-    }
+                                     
+    }         
+       
 
     private static void cleanTargetDirectory(String targetDirectory) {
         System.out.println("Cleaning target directory: " + targetDirectory);
@@ -161,22 +198,21 @@ public class Evaluator implements EvaluatorSubject{
         }
     }
 
-    public void runTest()  {
-
-        ArrayList<TestResult> results = new ArrayList<>();
+    
+    public void runTests()  {
         try {
-            if (JavaFileCompiler.compileJavaFiles()){
+            String outputDirectory = "target/classes";
+            if (getJavaFileCompiler().compileJavaFiles(mainDirectory,outputDirectory, getFilesToCompile())){
 
-            
-                if (TestRunner.runTests(submission)){
+                if (getTestRunner().runTests(submission)){
                     if(submission.getResults() != null){
                         
-                        System.out.println("Test Results: " + submission.getResults());
-                    notifyObservers(scoreObserver);
+                       // System.out.println("Test Results: " + submission.getResults());                        
                     }
                     else{
                         System.out.println("No test results found.");
-                    }        
+                    } 
+                    notifyObservers(scoreObserver);       
 
                  }
              }
@@ -199,6 +235,22 @@ public class Evaluator implements EvaluatorSubject{
         
         }
         return true; 
+    }
+
+
+    public List<String> getFilesToCompile() {
+        List<String> filesToCompile = new ArrayList<>();
+        filesToCompile.add("Flight.java");
+        filesToCompile.add("Passenger.java");
+        filesToCompile.add("LuggageManifest.java");
+        filesToCompile.add("LuggageSlip.java");
+        filesToCompile.add("LuggageManagementSystem.java");
+        filesToCompile.add("FlightTest.java");
+        filesToCompile.add("PassengerTest.java");
+        filesToCompile.add("LuggageManifestTest.java");
+        filesToCompile.add("LuggageSlipTest.java");
+        filesToCompile.add("LuggageManagementSystemTest.java");        
+        return filesToCompile;
     }
             
 
@@ -267,11 +319,11 @@ public class Evaluator implements EvaluatorSubject{
 
     public void reset(){
         try {
-            dummyJavaFileGenerator.generateFiles(mainDirectory + "/utilityFiles/dummyClasses.txt", mainDirectory);
+            getDummyJavaFileGenerator().generateFiles(mainDirectory + "/utilityFiles/dummyClasses.txt", mainDirectory);
             System.out.println("Dummy Java files written to temp directory.");
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            //e.printStackTrace();
+            e.printStackTrace();
         };
     }
 

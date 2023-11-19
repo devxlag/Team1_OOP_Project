@@ -9,9 +9,10 @@ package team1project;
 
 import org.junit.Before;
 // import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
+// import org.junit.jupiter.api.DisplayName;
+// import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,7 +25,7 @@ public class FlightTest{
 
 
     @Test
-    @DisplayName("Test String attributes types")
+   // @DisplayName("Test String attributes types")
     public void testStringAttributes() {
         assertStringAttribute("flightNo");
         assertStringAttribute("destination");
@@ -54,7 +55,7 @@ public class FlightTest{
     }
 
     @Test
-    @DisplayName("Test Flight Constructor")
+   // @DisplayName("Test Flight Constructor")
     public void testFlightConstructor() {
         // Create an instance of the Flight class
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -71,7 +72,7 @@ public class FlightTest{
     }
 
     @Test
-    @DisplayName("Test Check in Luggage methdod")
+    //@DisplayName("Test Check in Luggage methdod")
     public void testCheckInLuggage() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -87,7 +88,7 @@ public class FlightTest{
     }
 
     @Test
-    @DisplayName("Test Get Allowed Luggage method")
+    //@DisplayName("Test Get Allowed Luggage method")
     public void testGetAllowedLuggage() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -100,7 +101,7 @@ public class FlightTest{
     }
 
     @Test
-    @DisplayName("Test Print Luggage Manifest method")
+    //@DisplayName("Test Print Luggage Manifest method")
     public void testPrintLuggageManifest() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
@@ -112,14 +113,15 @@ public class FlightTest{
     }
 
     @Test
-    @DisplayName("Test toString method")
+    //@DisplayName("Test toString method")
     public void testToString() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
         Flight flight = new Flight("FL123", "New York", "London", flightDate);
 
         // Test toString method
-        String expectedToString = "FL123 DESTINATION: New York ORIGIN: London " + flightDate;
+        //String expectedToString = "FL123 DESTINATION: New York ORIGIN: London " + flightDate;
+        String expectedToString = "FL123" + " DESTINATION: " + "New York" + " ORGIN: " + "London" + " " + flightDate;
         assertEquals(expectedToString, flight.toString());
     }
 

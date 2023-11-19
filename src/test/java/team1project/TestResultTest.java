@@ -57,16 +57,23 @@ public class TestResultTest {
     @Test
     public void testToString() {
         TestResult testResult = new TestResult();
+        testResult.setTestName("testMethod(TestClass)");
         testResult.setClassName("TestClass");
         testResult.setMethodName("testMethod");
         testResult.setStatus("FAIL");
-        testResult.setErrorMessage("Error occurred");
+        testResult.setErrorMessage("Error occured");
+        testResult.setScore(0);
+        testResult.setFeedback(" ");
 
         String expectedToString = "TestResult{" +
-                                  "className='TestClass', " +
-                                  "methodName='testMethod', " +
-                                  "status='FAIL', " +
-                                  "errorMessage='Error occurred'}";
+                                    "testName='" + "testMethod(TestClass)" + '\'' +
+                                    ", className='" + "TestClass" + '\'' +
+                                    ", methodName='" + "testMethod" + '\'' +
+                                    ", status='" + "FAIL" + '\'' +
+                                    ", errorMessage='" + "Error occured"+ '\'' +
+                                    ", score=" + "0" +
+                                    ", feedback='" + " " + '\'' +
+                                    '}';
 
         assertEquals(expectedToString, testResult.toString());
     }
