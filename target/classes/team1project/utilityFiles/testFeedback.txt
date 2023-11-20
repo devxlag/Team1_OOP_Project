@@ -10,7 +10,7 @@ testPassengerAttribute,Review the owner attribute in LuggageSlip.
 testLuggageSlipConstructor,Review the original LuggageSlip constructor. 
 testLuggageSlipConstructorWithLabel,Review the overloaded LuggageSlip constructor. 
 testHasOwner,Review the hasOwner method in the LuggageSlip class. 
-testToLuggageSlipToString,Review the toString method in the LuggageSlip class. 
+testLuggageSlipToString,Review the toString method in the LuggageSlip class. 
 testLuggageSlipType,Review the slips attribute in LuggageManifest. 
 testLuggageManifestConstructor,Review the LuggageManifest constructor. 
 testLuggageManifestToString,Review the toString function in the LuggageManifest class. 

@@ -116,17 +116,17 @@ public class Evaluator implements EvaluatorSubject{
             if(compositeTreeRoot!=null){
                 if(evaluate()){
                     System.out.println("\nSubmissions evaluated.");
-                    //notifyClient("Submissions Evaluated. Check your zip file directory for the results.", "Success");
+                    notifyClient("Submissions Evaluated. Check your zip file directory for the results.", "Success");
                 }else{
                     System.out.println("\nSubmissions not evaluated.");
-                    //notifyClient("Submissions not evaluated.", "Error");                
+                    notifyClient("Submissions not evaluated.", "Error");                
                 }
             }
             else{
-                System.out.println("Zip File not processed.");
+                System.out.println("\nZip File not processed.");
             }
         }else{
-            System.out.println("No zip file found.");
+            System.out.println("\nNo zip file found.");
         }      
     }
 
@@ -179,10 +179,11 @@ public class Evaluator implements EvaluatorSubject{
                     
                     compelted = true;
                 }
-                
+                else{
+                    System.out.println("\nJava files not written to temp directory.");
+                }                
 
-            }
-                                
+            }                                
         }
         if(compelted){
             reset();
@@ -254,21 +255,20 @@ public class Evaluator implements EvaluatorSubject{
         try {
             String outputDirectory = "target/classes";
             if (getJavaFileCompiler().compileJavaFiles(mainDirectory,outputDirectory, getFilesToCompile())){
-                    getSubmission().setCompiled(true);
-                    getTestRunner().runTests(submission, testClasses);
-                        if(submission.getResults() != null){
-                            
-                        //System.out.println("Test Results: " + submission.getResults());                        
-                        }
-                        else{
-                            System.out.println("No test results found.");
-                        } 
-                       // notifyObservers(scoreObserver);       
+                getSubmission().setCompiled(true);
+                getTestRunner().runTests(submission, testClasses);
+                    if(submission.getResults() != null){
+                        
+                        System.out.println("Test results found.");                       
+                    }
+                    else{
+                        System.out.println("No test results found.");
+                    } 
+                           
 
             }
              else{
-                getSubmission().setCompiled(false);
-                //getTestRunner().runTests(submission, testClasses);
+                getSubmission().setCompiled(false);                
                 System.out.println("Submission not compiled.");
                 
              }
