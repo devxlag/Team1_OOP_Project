@@ -55,16 +55,17 @@ public class JavaFileCompiler {
         boolean compResult = task.call();
 
         if (compResult) {
-            System.out.println("Compilation successful");
+            System.out.println("\nCompilation successful");
             try {
                 fileManager.close();
             } catch (Exception e) {
                 // Handle exception, if needed
                 // e.printStackTrace();
+                System.out.println("Error closing file manager");
             }
             return true;
         } else {
-            System.err.println("Compilation failed");
+            System.err.println("\nCompilation failed");
             return false;
         }
     }

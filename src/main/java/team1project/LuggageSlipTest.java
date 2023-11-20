@@ -64,7 +64,7 @@ public class LuggageSlipTest {
      * It checks if the string attributes are of type String, private, and non-static.
      */
     @Test
-    public void testStringAttributes() {
+    public void testLuggageSlipStringAttributes() {
         assertStringAttribute("luggageSlipID");
         assertStringAttribute("label");
     }
@@ -195,7 +195,7 @@ public class LuggageSlipTest {
      * It checks if the 'toString' method generates the expected string representation.
      */
     @Test
-    public void testToString() {
+    public void testLuggageSlipToString() {
          // Create instances of Passenger and Flight classes
         Passenger passenger = new Passenger("AB123456", "John", "Doe", "ABC123");
         LocalDateTime flightDate = LocalDateTime.now();

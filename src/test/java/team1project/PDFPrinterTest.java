@@ -3,9 +3,12 @@ package team1project;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.io.File;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 
 
@@ -15,6 +18,9 @@ import org.junit.Test;
 
 public class PDFPrinterTest {
     private PDFPrinter pdfPrinter;
+
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Before
     public void setUp() 
@@ -89,16 +95,18 @@ public class PDFPrinterTest {
      * Tests the {@link PDFPrinter#saveAndClose(String)} method.
      */
     @Test
-    public void testSaveAndClose() {
+    public void testSaveAndClose() throws Exception{
+
+        File outputDir = tempFolder.newFolder("temp", "dir", "team1project");
+
         pdfPrinter.createNewDocument();
         pdfPrinter.createNewPage();
          pdfPrinter.addBasicContent(new String[]{"Test Content"});
-        pdfPrinter.closeContentStream();
-         String savePath = "C:\\Users\\myahs\\OneDrive\\Desktop";
-         assertDoesNotThrow(() -> pdfPrinter.saveAndClose(savePath));
+        pdfPrinter.closeContentStream();         
+         assertDoesNotThrow(() -> pdfPrinter.saveAndClose(outputDir.getAbsolutePath()));
     
     
-        assertTrue(java.nio.file.Paths.get(savePath).toFile().exists());
+        assertTrue(java.nio.file.Paths.get(outputDir.getAbsolutePath()).toFile().exists());
       
     }
     

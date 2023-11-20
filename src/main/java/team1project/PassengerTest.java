@@ -57,7 +57,7 @@ public class PassengerTest {
      * Test for string attributes in the Passenger class.
      */
     @Test
-    public void testStringAttributes() {
+    public void testPassengerStringAttributes() {
         assertStringAttribute("passportNumber");
         assertStringAttribute("flightNo");
         assertStringAttribute("firstName");

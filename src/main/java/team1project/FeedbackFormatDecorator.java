@@ -47,8 +47,10 @@ private String feedbackContent;
             String luggageSlipScore = "Luggage Slip Class Score: " + submission.getLuggageSlipClassScore()  + "/14"+ "\n";
             String luggageManifestScore = "Luggage Manifest Class Score: " + submission.getLuggageManifestClassScore()  + "/20"+ "\n";
             String compileScore = "Compile Score: " + submission.getCompileScore()  + "/5"+ "\n";
-            String cleanCodeScore = "Clean Code Score: " + submission.getTotalCleanCodeScore()  + "/5"+ "\n";
-            String classScores = "\n" + passengerScore +  "\n" + flightScore +  "\n" +luggageSlipScore + "\n" + luggageManifestScore + "\n" + compileScore + "\n" + cleanCodeScore;
+            String cleanCodeScore = "Has clean Code: " + submission.getTotalCleanCodeScore()  + "/5"+ "\n";
+            String junitScore = "Passes JUnit Tests: " + submission.getPassesAllJunit()  + "/14"+ "\n";
+            String runs = "Runs (LuggageManagementSystem): " + submission.getLuggageSystemScore()  + "/10"+ "\n";
+            String classScores = "\n" + passengerScore +  "\n" + flightScore +  "\n" +luggageSlipScore + "\n" + luggageManifestScore + "\n" + compileScore + "\n" + cleanCodeScore + "\n" + junitScore + "\n" + runs;
 
             basicContent += "\n" + classScores;
 
@@ -66,8 +68,13 @@ private String feedbackContent;
             {
                 if(tr.getStatus().equals("FAILED"))
                 {
-                    correctiveFeed = "  " + tr.getTestName() + " " + "\n  Comment: " + tr.getFeedback() + "\n";
+                    correctiveFeed = "  " + tr.getMethodName() + " " + "\n  Comment: " + tr.getFeedback() + "\n";
                     correctiveFeedback += "\n" + correctiveFeed;
+                }
+
+                if(tr.getStatus().equals("PASSED"))
+                {
+                    tr.setErrorMessage("No Error");
                 }
 
                 // Group test feedback by class name
@@ -84,12 +91,12 @@ private String feedbackContent;
 
             // Include a message if no corrective feedback is given
 
-            if(correctiveFeed.equals("") && !submission.getResults().isEmpty())
+            if(!(submission.getResults().size() > 1))
             {
                 correctiveFeedback += "\n  No corrective feedback to give. You passed all the tests!";
             }
             else{
-                correctiveFeedback += "\n  No corrective feedback to give. You did not adhere to the requirements of the assignment or your files failed to compile.";
+                correctiveFeedback += "\n  You did not adhere to the requirements of the assignment or your files failed to compile.";
             }
 
 

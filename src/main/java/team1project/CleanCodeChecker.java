@@ -16,7 +16,7 @@ public class CleanCodeChecker {
      */
     public static double checkCode(String code) {
 
-        double score = 5;
+        double score = 10;
 
         // Check indentation
         score -= 0.5 * countIndentationIssues(code);

@@ -20,6 +20,8 @@ public class Submission {
     private int luggageManifestClassScore = 0;
     private int compileScore = 0;
     private int totalScore = 0;
+    private int passesAllJunit = 0;
+    private int luggageSystemScore = 0;
     private String feedback;
     private ArrayList<String> filesSubmitted;
     private ArrayList<String> missingFiles;
@@ -135,6 +137,26 @@ public class Submission {
     }
 
     /**
+     * Gets the number of tests passed.
+     *
+     * @return The number of tests passed.
+     */
+    public int getPassesAllJunit() {
+        return passesAllJunit;
+    }
+
+    /**
+     * Sets the number of tests passed.
+     *
+     * @param passesAllJunit The number of tests passed to set.
+     */
+
+    public void setPassesAllJunit(int passesAllJunit) {
+        this.passesAllJunit = passesAllJunit;
+
+    }
+
+    /**
      * Sets the compilation score.
      *
      * @param compileScore The compilation score to set.
@@ -150,6 +172,24 @@ public class Submission {
      */
     public boolean isCompiled() {
         return isCompiled;
+    }
+
+    /**
+     * Gets the score for the Luggage System.
+     *
+     * @return The Luggage System score.
+     */
+    public int getLuggageSystemScore() {
+        return luggageSystemScore;
+    }
+
+    /**
+     * Sets the score for the Luggage System.
+     *
+     * @param luggageSystemScore The Luggage System score to set.
+     */
+    public void setLuggageSystemScore(int luggageSystemScore) {
+        this.luggageSystemScore = luggageSystemScore;
     }
 
     /**

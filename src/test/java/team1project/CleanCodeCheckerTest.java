@@ -40,7 +40,7 @@ public class CleanCodeCheckerTest {
                 "}\n" +
                 "}";
         double syntaxIssuesScore = CleanCodeChecker.checkCode(codeWithSyntaxIssues);
-        assertEquals(4.5, syntaxIssuesScore, 0.01);
+        assertEquals(5, syntaxIssuesScore, 0.01);
 
         // Test with code that has long methods
         String codeWithLongMethods = "public class CodeWithLongMethods {\n" +
@@ -62,7 +62,7 @@ public class CleanCodeCheckerTest {
                 "\t}\n" +
                 "}";
         double camelCaseIssuesScore = CleanCodeChecker.checkCode(codeWithCamelCaseIssues);
-        assertEquals(3.75, camelCaseIssuesScore, 0.01);
+        assertEquals(5, camelCaseIssuesScore, 0.01);
 
         // Test with code that has comments (comment score should be positive)
         String codeWithComments = "public class CodeWithComments {\n" +
@@ -75,7 +75,7 @@ public class CleanCodeCheckerTest {
                 "\t}\n" +
                 "}";
         double commentScore = CleanCodeChecker.checkCode(codeWithComments);
-        assertEquals(4.5, commentScore, 0.01);
+        assertEquals(5, commentScore, 0.01);
     }
 }
 

@@ -110,14 +110,16 @@ public class Evaluator implements EvaluatorSubject{
     
     public void processSubmissionFile(File zipFile) throws IOException { 
         
-       // reset();
+       //reset();
         if(zipFile != null){
             setZipFile(zipFile);
             if(compositeTreeRoot!=null){
                 if(evaluate()){
-                    System.out.println("\nSubmissions evaluated.");                
+                    System.out.println("\nSubmissions evaluated.");
+                    //notifyClient("Submissions Evaluated. Check your zip file directory for the results.", "Success");
                 }else{
-                    System.out.println("\nSubmissions not evaluated.");                
+                    System.out.println("\nSubmissions not evaluated.");
+                    //notifyClient("Submissions not evaluated.", "Error");                
                 }
             }
             else{
@@ -163,7 +165,7 @@ public class Evaluator implements EvaluatorSubject{
                
                 System.out.print("\nWriting Java files to temp directory: for Student ID: " + getSubmission().getStudentID());
                 
-            
+                cleanTargetDirectory(mainDirectory + "/target/classes");
                 //reset();
 
                 for(AbstractFile child : zipFile.getChildren()) { 
@@ -256,7 +258,7 @@ public class Evaluator implements EvaluatorSubject{
                     getTestRunner().runTests(submission, testClasses);
                         if(submission.getResults() != null){
                             
-                         System.out.println("Test Results: " + submission.getResults());                        
+                        //System.out.println("Test Results: " + submission.getResults());                        
                         }
                         else{
                             System.out.println("No test results found.");
@@ -275,7 +277,8 @@ public class Evaluator implements EvaluatorSubject{
              notifyObservers(pdfObserver);
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Error running tests.");
         }
         finally{
             cleanTargetDirectory(mainDirectory + "/target/classes");

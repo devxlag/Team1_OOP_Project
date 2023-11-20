@@ -16,7 +16,7 @@ public class FlightTest {
      * Test for string attributes in the Flight class.
      */
     @Test
-    public void testStringAttributes() {
+    public void testFlightStringAttributes() {
         assertStringAttribute("flightNo");
         assertStringAttribute("destination");
         assertStringAttribute("origin");
@@ -187,7 +187,7 @@ public class FlightTest {
      * Test for toString method in the Flight class.
      */
     @Test
-    public void testToString() {
+    public void testFlightToString() {
         // Create a Flight instance
         LocalDateTime flightDate = LocalDateTime.now(); // You can replace this with an actual date
         Flight flight = new Flight("FL123", "New York", "London", flightDate);

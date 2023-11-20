@@ -1,0 +1,43 @@
+testPassengerStringAttributes,Review the attributes in the Passenger class.
+testCharAttribute,Review cabinClass attribute in Passenger class. 
+testNumLuggageAttribute,Review the numLuggage attribute in the Passenger class. 
+testPassengerConstructor,Review the Passenger constructor. 
+testAssignRandomCabinClass,Review the assignRandomCabinClass method in the Passenger class. 
+testToStringMethodFormat,Review the toString method in the Passenger class. 
+testLuggageSlipStringAttributes,Review the attributes in the LuggageSlip class. 
+testIntegerAttribute,Review the luggageSlipIDCounter attribute. 
+testPassengerAttribute,Review the owner attribute in LuggageSlip. 
+testLuggageSlipConstructor,Review the original LuggageSlip constructor. 
+testLuggageSlipConstructorWithLabel,Review the overloaded LuggageSlip constructor. 
+testHasOwner,Review the hasOwner method in the LuggageSlip class. 
+testToLuggageSlipToString,Review the toString method in the LuggageSlip class. 
+testLuggageSlipType,Review the slips attribute in LuggageManifest. 
+testLuggageManifestConstructor,Review the LuggageManifest constructor. 
+testLuggageManifestToString,Review the toString function in the LuggageManifest class. 
+testAddLuggage,Review the addLuggage function. 
+testGetExcessLuggageCost,Review the getExcessLuggageCost function in the LuggageManifest class. 
+testGetExcessLuggageCostByPassenger,Review the getExcessLuggageCostByPassenger function in the LuggageManifest class. 
+testLuggageManifestToString,Review the toString function in the LuggageManifest class. 
+testPrintLuggageManifest,Review the printLuggageManifest function in the flight class. 
+testFlightStringAttributes,Review the attributes in the Flight Class. 
+testFlightConstructor,Review the Flight constructor. 
+testLuggageManifestAttribute,Review the manifest attribute in the flight class. 
+testFlightDateAttribute,Review the flightDate attribute in the flight class. 
+testCheckInLuggage,Review the checkInLuggage function in the Flight class. 
+testGetAllowedLuggage,Review the getAllowedLuggage function in the Flight class. 
+testPrintLuggageManifest,Review the printLuggageManifest function in the Flight class. 
+testFlightToString,Review the toString function in the flight class. 
+java.lang.AssertionError:,Check your test assertions. The expected value does not match the actual value.
+java.lang.NullPointerException,Review your code for potential null references. Ensure that all necessary objects are properly initialized.
+org.junit.ComparisonFailure:,Check your string comparisons. The expected and actual strings do not match.
+java.lang.Exception:,Ensure that your test methods are annotated with @Test and have the correct method signature.
+java.lang.NoClassDefFoundError:,Make sure you have the necessary dependencies in your project, such as Hamcrest.
+java.lang.IllegalArgumentException:Invalid argument passed,Check the input arguments provided to the method. Ensure they meet the required criteria.
+org.junit.runners.model.TestTimedOutException:Test timed out,Review your test logic for potential infinite loops or other time-consuming operations.
+java.lang.ArrayIndexOutOfBoundsException:Index <index> out of bounds for length <array_length>,Ensure that array indices are within the bounds of the array length.
+java.lang.UnsupportedOperationException:Operation not supported,Check the documentation to see if the operation is supported by the object or collection.
+java.lang.ClassNotFoundException:,Verify that the specified class is on the classpath.
+java.lang.ArithmeticException:,Handle the case where the denominator is zero to avoid division by zero.
+java.lang.RuntimeException:,Inspect the stack trace and handle the specific exception that caused the runtime error.
+org.junit.AssumptionViolatedException:,Review the assumptions made in your test and ensure they are valid.
+javax.validation.ConstraintViolationException:,Fix the validation issues for the specified class.

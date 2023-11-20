@@ -44,7 +44,8 @@ public class TestRunner {
 
         ArrayList<TestResult> finalResults = listener.getTestResults();
         System.out.println("Number of tests found: " + finalResults.size());
-        submission.setResults(finalResults);        
+        submission.setResults(finalResults);
+
     }
 
     /**
@@ -79,7 +80,9 @@ public class TestRunner {
             testResult.setClassName(description.getClassName());
             testResult.setMethodName(description.getMethodName());
             testResult.setStatus("FAILED");
-            testResult.setErrorMessage(failure.getException().getMessage());
+            testResult.setErrorMessage(failure.getMessage());
+            String[] rawErrorMessage = failure.getTrace().toString().split(":");
+            testResult.setRawErrorMessage(rawErrorMessage[0]);
             testResults.put(currentTest, testResult);
         }
 

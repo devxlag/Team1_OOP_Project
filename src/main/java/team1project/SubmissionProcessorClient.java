@@ -5,10 +5,10 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- * The SubmissionProcessorClient class is a client application for processing submissions
- * from ZIP files using a graphical user interface.
- */
+// /**
+//  * The SubmissionProcessorClient class is a client application for processing submissions
+//  * from ZIP files using a graphical user interface.
+//  */
 // public class SubmissionProcessorClient {
 
 //     /**
@@ -64,7 +64,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class SubmissionProcessorClient {
     public static void main(String[] args) throws Exception{
         // Replace with the path to the zip file containing student submissions
-        String zipFilePath ="C:\\Users\\Devon Murray\\OneDrive - The University of the West Indies, St. Augustine\\UWI Courses\\Year 3 Semester 1\\COMP 3607\\Assignments\\Project\\working files\\submissions.zip";
+        String zipFilePath ="C:\\Users\\Devon Murray\\OneDrive - The University of the West Indies, St. Augustine\\UWI Courses\\Year 3 Semester 1\\COMP 3607\\Assignments\\Project\\working files\\submission1e.zip";
         
         try {
             File zipFile = new File(zipFilePath);
