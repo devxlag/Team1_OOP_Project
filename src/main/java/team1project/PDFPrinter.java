@@ -76,7 +76,7 @@ public class PDFPrinter {
             float yPosition = currentPage.getMediaBox().getHeight() - margin;
 
             currentContentStream.beginText();
-            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 5);
+            currentContentStream.setFont(PDType1Font.COURIER_BOLD, 11);
              currentContentStream.newLineAtOffset(margin, yPosition);
             float lineHeight = 12;
 

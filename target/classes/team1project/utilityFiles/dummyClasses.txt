@@ -69,7 +69,7 @@ public class LuggageManifest {
         return null;
     }
 
-    private double getExcessLuggageCost(int numPieces, int numAllowedPieces) {
+    public double getExcessLuggageCost(int numPieces, int numAllowedPieces) {
         return 0.0;
     }
 

@@ -11,6 +11,7 @@ public class TestResult {
     private String className;
     private String methodName;
     private String status;
+    private String rawErrorMessage;
     private String errorMessage;
     private String feedback;
     private int score;
@@ -67,6 +68,25 @@ public class TestResult {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * Gets the raw error message associated with a failed test result.
+     *
+     * @return The raw error message.
+     */
+    public String getRawErrorMessage() {
+        return rawErrorMessage;
+    }
+
+    /**
+     * Sets the raw error message associated with a failed test result.
+     *
+     * @param rawErrorMessage The raw error message to set.
+     */
+
+    public void setRawErrorMessage(String rawErrorMessage) {
+        this.rawErrorMessage = rawErrorMessage;
     }
 
     /**

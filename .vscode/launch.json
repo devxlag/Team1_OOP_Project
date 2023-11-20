@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CleanCodeChecker",
+            "request": "launch",
+            "mainClass": "team1project.CleanCodeChecker",
+            "projectName": "team1project"
+        },
+        {
+            "type": "java",
+            "name": "FileNameExtractor",
+            "request": "launch",
+            "mainClass": "team1project.FileNameExtractor",
+            "projectName": "team1project"
+        },
+        {
+            "type": "java",
             "name": "SubmissionProcessor",
             "request": "launch",
             "mainClass": "team1project.SubmissionProcessor",

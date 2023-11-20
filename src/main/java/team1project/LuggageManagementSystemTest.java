@@ -26,7 +26,7 @@ public class LuggageManagementSystemTest
      */
 
     @Test
-    public static void testLuggageManagementSystem() {
+    public void testLuggageManagementSystem() {
         // Redirect System.out to capture printed output
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));

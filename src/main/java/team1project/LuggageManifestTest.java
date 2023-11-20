@@ -1,7 +1,5 @@
 package team1project;
 
-
-
 import org.junit.After;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -9,10 +7,19 @@ import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 
 import org.junit.Test;
-// import org.junit.jupiter.api.DisplayName;
-// import static org.junit.jupiter.api.Assertions.*;
-import java.time.LocalDateTime;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+/**
+ * The LuggageManifestTest class contains unit tests for the LuggageManifest class.
+ * It ensures that the LuggageManifest class is implemented correctly and its
+ * attributes and methods behave as expected.
+ */
 public class LuggageManifestTest {
 
     private LuggageManifest luggageManifest;
@@ -21,6 +28,9 @@ public class LuggageManifestTest {
     private Passenger passenger;
     private Passenger passenger2;
 
+    /**
+     * Set up the test environment before each test case.
+     */
     @Before    
     public void setUp() {
         luggageManifest = new LuggageManifest();
@@ -31,20 +41,63 @@ public class LuggageManifestTest {
         passenger2 = new Passenger("789012", "Jane", "Smith", "ABC123");
     }
 
+    /**
+     * Tear down the test environment after each test case.
+     */
     @After
     public void tearDown() {
-        luggageManifest = null;
-       // flight.getManifest().getSlips().clear();
+        luggageManifest = null;       
         flight = null;
         passenger = null;
         passenger2 = null;
     }
 
+    /**
+     * Tests the 'slips' attribute type of the LuggageManifest class.
+     * It checks if the 'slips' attribute is of type ArrayList<LuggageSlip>.
+     *
+     * @throws NoSuchFieldException if the field is not found
+     */
     @Test
-    //@DisplayName("Test addLuggageSlip method")
+    public void testLuggageSlipType() throws NoSuchFieldException {
+         // Create an instance of MyClass
+        ArrayList<LuggageSlip> expectedList = new ArrayList<>();
+        LuggageManifest myInstance = new LuggageManifest();
+
+        // Use reflection to access the private field
+        Field privateSlipsField = LuggageManifest.class.getDeclaredField("slips");
+
+        // Get the generic type of the ArrayList
+        Type genericType = privateSlipsField.getGenericType();
+
+        // Ensure that the field is of type ArrayList
+        assertTrue(privateSlipsField.getType() == ArrayList.class);
+
+        // Ensure that the generic type parameter is LuggageSlip
+        assertTrue(genericType instanceof ParameterizedType);
+        ParameterizedType parameterizedType = (ParameterizedType) genericType;
+        Type[] typeArguments = parameterizedType.getActualTypeArguments();
+        assertTrue(typeArguments.length == 1); // Only one type argument for ArrayList
+        assertTrue(typeArguments[0] == LuggageSlip.class);
+    }
+
+    /**
+     * Tests the LuggageManifest class constructor.
+     * It checks if the constructor initializes the 'slips' attribute to a non-null ArrayList.
+     */
+    @Test
+    public void testLuggageManifestConstructor() {
+         LuggageManifest luggageManifest = new LuggageManifest();
+        assertNotNull(luggageManifest.getSlips()); 
+    }
+
+    /**
+     * Tests the 'addLuggageSlip' method of the LuggageManifest class.
+     * It checks if the method adds luggage correctly and returns the expected result.
+     */
+    @Test
     public void testAddLuggage() {
         
-
         String result1 = flight.checkInLuggage(passenger);
 
         // Calculate excess luggage cost
@@ -79,24 +132,15 @@ public class LuggageManifestTest {
         + text2;
 
         assertEquals(expectedResult, result1);
-
-        //assertEquals(1, flight.getManifest().getSlips().size());
-
-        // Flight flight2 = new Flight("XYZ456", "Destination2", "Origin2", flightDate);
-        // Passenger passenger2 = new Passenger("789012", "Jada", "Smith", "XYZ456");
-
-        // String result2 = flight2.checkInLuggage(passenger2);
-
-        // assertEquals("2 pieces of luggage, 0 excess\nPP NO. 789012 NAME: J.SMITH NUMLUGGAGE: 2 CLASS: B\nPieces Added: (2). Excess Cost: $0.0", result2);
-        //assertEquals(2, flight2.getManifest().getSlips().size());
     }
 
-    @Test
-    //@DisplayName("Test getExcessLuggageCostByPassenger method")
+    /**
+     * Tests the 'getExcessLuggageCostByPassenger' method of the LuggageManifest class.
+     * It checks if the method calculates the excess luggage cost correctly based on the passenger's details.
+     */
+    @Test    
     public void testGetExcessLuggageCostByPassenger() {
-       
-
-        flight.checkInLuggage(passenger);
+         flight.checkInLuggage(passenger);
 
          // Calculate the expected excess cost based on the specific values
         int numAllowedPieces = flight.getAllowedLuggage(passenger.getCabinClass());
@@ -121,31 +165,39 @@ public class LuggageManifestTest {
         assertEquals("No Cost", noExcessCost);
     }
 
+    /**
+     * Tests the 'getExcessLuggageCost' method of the LuggageManifest class.
+     * It checks if the method calculates the excess luggage cost correctly based on the number of pieces and allowed pieces.
+     */
     @Test
-    //@DisplayName("Test printLuggageManifest method")
-    public void testPrintLuggageManifest() {
-        
-               
+    public void testGetExcessLuggageCost() {
+        // Create an instance of LuggageManifest
+        LuggageManifest luggageManifest = new LuggageManifest();
 
+        // Test case: numPieces is less than or equal to numAllowedPieces
+        double cost1 = luggageManifest.getExcessLuggageCost(3, 5);
+        assertEquals(0, cost1, 0.01); // Assuming a small delta for double comparison
+
+        // Test case: numPieces is greater than numAllowedPieces
+        double cost2 = luggageManifest.getExcessLuggageCost(8, 5);
+        assertEquals(3 * 35, cost2, 0.01); // Excess pieces multiplied by cost per piece
+    }
+
+    /**
+     * Tests the 'printLuggageManifest' method of the LuggageManifest class.
+     * It checks if the method generates the expected string representation of the luggage manifest.
+     */
+    @Test   
+    public void testLuggageManifestToString() {
         flight1.checkInLuggage(passenger);
         flight1.checkInLuggage(passenger2);
 
         String result = flight.printLuggageManifest();
 
         assumeTrue(passenger.getNumLuggage() == 0);
-        assertTrue(result.contains(passenger.toString()));
+        assertTrue(!result.contains(passenger.toString()));
 
         assumeTrue(passenger2.getNumLuggage() != 0);  
-        assumeFalse(result.contains(passenger2.toString()));
-    
-        // if(passenger.getNumLuggage() == 0)
-        //     assertTrue(result.contains(passenger.toString()));
-        // else
-        //     assumeFalse(result.contains(passenger.toString()));
-
-        // if(passenger2.getNumLuggage() == 0)
-        //     assertTrue(result.contains(passenger2.toString()));
-        // else
-        //     assumeFalse(result.contains(passenger2.toString()));        
+        assumeFalse(result.contains(passenger2.toString()));           
     }
 }

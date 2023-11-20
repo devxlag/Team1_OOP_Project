@@ -71,13 +71,16 @@ public class ZipSubmissionProcessor implements EvaluatorObserver {
      * @param submissionFile The submission file to process.
      * @return True if the submission is processed successfully, false otherwise.
      */
-    public boolean processSubmission(File submissionFile) {
+    private boolean processSubmission(File submissionFile) {
         compositeTreeRoot = new ZipFile(submissionFile.getName());
         String outputFolder = submissionFile.getParent();
         try (FileInputStream fis = new FileInputStream(submissionFile)) {
             processZipStream(fis, outputFolder);
+            if(compositeTreeRoot.getChildren().isEmpty()){
+                return false;
+            }
 
-            return compositeTreeRoot != null;
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,9 +94,10 @@ public class ZipSubmissionProcessor implements EvaluatorObserver {
      * @param outputFolder The output folder to store extracted files.
      * @throws IOException If an I/O error occurs.
      */
-    public void processZipStream(InputStream inputStream, String outputFolder) throws IOException {
+    private void processZipStream(InputStream inputStream, String outputFolder) throws IOException {
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
         ZipEntry entry;
+
         while ((entry = zipInputStream.getNextEntry()) != null) {
             if (!entry.isDirectory() && entry.getName().endsWith(".zip")) {
                 // Extract and process each student submission zip file
@@ -113,7 +117,7 @@ public class ZipSubmissionProcessor implements EvaluatorObserver {
             }
             zipInputStream.closeEntry();
         }
-        zipInputStream.close();
+        zipInputStream.close();        
     }
 
     /**
@@ -125,7 +129,7 @@ public class ZipSubmissionProcessor implements EvaluatorObserver {
      * @return The ZipFile representing the student's submission.
      * @throws IOException If an I/O error occurs.
      */
-    public ZipFile extractJavaFiles(InputStream inputStream, String filename, String submissionFolder) throws IOException {
+    private ZipFile extractJavaFiles(InputStream inputStream, String filename, String submissionFolder) throws IOException {
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
         ZipEntry entry;
         ZipFile studentZipFile = new ZipFile(filename);
@@ -150,7 +154,7 @@ public class ZipSubmissionProcessor implements EvaluatorObserver {
      * @return The JavaFile object representing the processed Java file.
      * @throws IOException If an I/O error occurs.
      */
-    public JavaFile processJavaFile(InputStream inputStream, String javaFilename, String submissionFolder) throws IOException {
+    private JavaFile processJavaFile(InputStream inputStream, String javaFilename, String submissionFolder) throws IOException {
         JavaFile javaFile = new JavaFile(javaFilename);
 
         // Copy input stream to buffer

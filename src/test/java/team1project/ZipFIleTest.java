@@ -29,48 +29,7 @@ public class ZipFIleTest {
         assertEquals(fileComponent, zipFile.getChildren().get(0));
     }
 
-    // @Test
-    // public void testDisplay() throws Exception{
-    //     ZipFile zipFile = new ZipFile("test.zip");
-    //     JavaFile fileComponent = new JavaFile("file.txt");
-    //     zipFile.addComponent(fileComponent);
-
-    //     // Redirect standard out for testing
-    //     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    //     System.setOut(new PrintStream(outputStream));
-
-    //     zipFile.display();
-
-    //     assertEquals("Zip File: test.zip\nJava File: file.txt\nContents:".trim(), outputStream.toString().);
-
-    //     // Reset standard out
-    //     System.setOut(System.out);
-    // }
-
-
-//     @Test
-//     public void testDisplay() {
-//         ZipFile zipFile = new ZipFile("test.zip");
-        
-//         JavaFile javaFile = new JavaFile("SampleFile.java");
-//         javaFile.appendContents("public class SampleFile {\n    // File contents\n}");
-//         zipFile.addComponent(javaFile);
-//         // Redirect the standard output to capture it for testing
-//         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//         System.setOut(new PrintStream(outputStream));
-
-//         // Call the display method
-//         zipFile.display();
-
-//         // Reset the standard output
-//         System.setOut(System.out);
-
-//         // Verify the printed output
-//         String expectedOutput = "Zip File: test.zip\nJava File: SampleFile.java\nContents:\npublic class SampleFile {\n    // File contents\n}";
-//         assertEquals(expectedOutput, outputStream.toString().trim());
-//     }
-
-
+    
     @Test
     public void testGetFileName() {
         ZipFile zipFile = new ZipFile("test.zip");

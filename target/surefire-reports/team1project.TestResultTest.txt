@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: team1project.TestResultTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.013 s <<< FAILURE! - in team1project.TestResultTest
-testToString  Time elapsed: 0.009 s  <<< FAILURE!
-org.junit.ComparisonFailure: expected:<...Message='Error occur[]ed', score=0, feedba...> but was:<...Message='Error occur[r]ed', score=0, feedba...>
-	at team1project.TestResultTest.testToString(TestResultTest.java:78)
-
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in team1project.TestResultTest
