@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AutomatedJudgeSystem",
+            "request": "launch",
+            "mainClass": "team1project.AutomatedJudgeSystem",
+            "projectName": "team1project"
+        },
+        {
+            "type": "java",
             "name": "CleanCodeChecker",
             "request": "launch",
             "mainClass": "team1project.CleanCodeChecker",

@@ -9,7 +9,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 //  * The SubmissionProcessorClient class is a client application for processing submissions
 //  * from ZIP files using a graphical user interface.
 //  */
-public class SubmissionProcessorClient {
+public class AutomatedJudgeSystem {
 
     /**
      * Main method to start the application.
