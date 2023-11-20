@@ -66,8 +66,7 @@ public class ScoreCalculator implements EvaluatorObserver {
                     testResult.setScore(0);
             }
             done1 = true;
-        }
-        System.out.println("Junit score calculated successfully. " + junitScore + " out of 14.");
+        }        
         
         submission.setPassesAllJunit((int) junitScore);
 

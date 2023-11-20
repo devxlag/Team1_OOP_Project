@@ -91,12 +91,9 @@ private String feedbackContent;
 
             // Include a message if no corrective feedback is given
 
-            if(!(submission.getResults().size() > 1))
+            if(correctiveFeedback.equals(" Corrective Feedback: \n"))
             {
-                correctiveFeedback += "\n  No corrective feedback to give. You passed all the tests!";
-            }
-            else{
-                correctiveFeedback += "\n  You did not adhere to the requirements of the assignment or your files failed to compile.";
+                correctiveFeedback += "\n  No corrective feedback given.";
             }
 
 
