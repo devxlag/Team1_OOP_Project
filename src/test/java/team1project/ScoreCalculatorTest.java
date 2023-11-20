@@ -5,10 +5,16 @@ import java.lang.reflect.Array;
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
-
+/**
+ * Unit tests for the {@link ScoreCalculator} class.
+ * 
+ */
 public class ScoreCalculatorTest {
     
-
+    /**
+     * Tests the 'update' method of the ScoreCalculator class.
+     * It checks if the 'update' method updates the submission's scores correctly.
+     */
     @Test
     public void testUpdate(){
         Submission submission = createMockSubmission();

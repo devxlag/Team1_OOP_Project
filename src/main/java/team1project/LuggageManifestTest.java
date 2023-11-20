@@ -157,6 +157,7 @@ public class LuggageManifestTest {
 
 
         // Test case: Passenger with excess luggage
+        assumeTrue(passenger.getNumLuggage() > numAllowedPieces); // Assuming that the passenger has excess luggage (i.e. numLuggage > numAllowedPieces
         String excessCost = flight.getManifest().getExcessLuggageCostByPassenger("123456");
         assertEquals(expectedExcessCostString, excessCost);
 

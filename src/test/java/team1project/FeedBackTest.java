@@ -2,11 +2,18 @@ package team1project;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.Test;
 
+/**
+ * Unit tests for the {@link FeedBack} class.
+ * 
+ */
 public class FeedBackTest {
 
+    /**
+     * Tests the 'update'  method of the FeedBack class.
+     * It checks if the 'update' method updates the submission's feedback correctly.
+     */
     @Test
     public void testUpdate() {
 

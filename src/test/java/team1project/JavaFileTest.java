@@ -3,13 +3,16 @@ package team1project;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import org.junit.Test;
-
+/**
+ * Unit tests for the {@link JavaFile} class.
+ * 
+ */
 public class JavaFileTest {
-
+    /**
+     * Tests the creation of a JavaFile object.
+     */
     @Test
     public void testJavaFileCreation() {
         JavaFile javaFile = new JavaFile("TestFile.java");
@@ -18,7 +21,9 @@ public class JavaFileTest {
         assertNotNull(javaFile.getContents());
         assertEquals("", javaFile.getContents());
     }
-
+    /**
+     * Tests the appendContents method of the JavaFile class.
+     */
     @Test
     public void testAppendContents() {
         JavaFile javaFile = new JavaFile("TestFile.java");

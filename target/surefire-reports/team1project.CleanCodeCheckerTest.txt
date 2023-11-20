@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: team1project.CleanCodeCheckerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s - in team1project.CleanCodeCheckerTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s - in team1project.CleanCodeCheckerTest
